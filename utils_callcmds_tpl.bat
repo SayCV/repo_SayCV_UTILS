@@ -8,12 +8,21 @@ echo.
 
 cd /d %~dp0
 
-set INSTALL_ENV_DIR_MINGW=D:\MinGW
-set INSTALL_ENV_DIR_CYGWIN=D:\cygwin
+rem echo set dos windows size : cols=113, lines=150, color=black
+rem mode con cols=113 lines=15 & color 0f
 
+rem set other values to included both MinGW and Cygwin Env.
 set /a INSIDE_UTILS_ENV_MINGW=0
 set /a INSIDE_UTILS_ENV_CYGWIN=1
 set /a INSIDE_UTILS_ENV_FLAG=1
+
+rem set other values to do some user cmds
+set /a EOF_ENV_CMD=0
+set /a EOF_ENV_BASH=1
+set /a EOF_ENV_FLAG=1
+
+set INSTALL_ENV_DIR_MINGW=D:\MinGW
+set INSTALL_ENV_DIR_CYGWIN=D:\cygwin
 
 if %INSIDE_UTILS_ENV_FLAG% EQU %INSIDE_UTILS_ENV_MINGW% (
     echo Init Included MinGW env.
@@ -34,9 +43,32 @@ if %INSIDE_UTILS_ENV_FLAG% EQU %INSIDE_UTILS_ENV_MINGW% (
 echo Init HOME directory to here call batfile.
 set HOME=%cd%
 
-bash --login -i
+REM ******************************
+REM Start ...
+REM ##############################
 
 
+REM ##############################
+REM End ...
+REM ******************************
+
+if %EOF_ENV_FLAG% EQU %EOF_ENV_CMD% (
+  call :__subCall_CMD__
+) else (
+  call :__subCall_BASH__
+)
+
+:__subCall_Status_Code__
+
+:__subCall_BASH__
+  bash --login -i
+  goto :__subCall_EOF__
+
+:__subCall_CMD__
+  cmd
+  goto :__subCall_EOF__
+
+:__subCall_EOF__
 :EOF
-  pause
-  exit
+  PAUSE
+  EXIT
