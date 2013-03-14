@@ -1,3 +1,6 @@
 [submodule "SayCV_Cadence_SkillMngt"]
 	path = SayCV_Cadence_SkillMngt
 	url = https://SayCV@github.com/SayCV/SayCV_Cadence_SkillMngt.git
+[submodule "SayCV_OpenVPN"]
+	path = SayCV_OpenVPN
+	url = https://SayCV@github.com/SayCV/SayCV_OpenVPN.git
