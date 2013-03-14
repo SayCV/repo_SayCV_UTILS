@@ -47,6 +47,17 @@ REM ******************************
 REM Start ...
 REM ##############################
 
+if 1==1 (
+    echo "Build (unsigned):"
+    cd %HOME%/SayCV_OpenVPN/SayCV_OpenVPN_build/windows-nsis
+    bash ./build-complete
+) else (
+    echo "Build (signed):"
+    cd %HOME%/SayCV_OpenVPN/SayCV_OpenVPN_build/windows-nsis
+    ./build-complete --sign --sign-pkcs12=<pkcs12-file> `
+    --sign-pkcs12-pass=<pkcs12-file-password> `
+    --sign-timestamp="<timestamp-url>"
+)
 
 REM ##############################
 REM End ...
