@@ -61,6 +61,7 @@ if "1" == "1" (
     cd %CC_HERE%/SayCV_OpenVPN/SayCV_OpenVPN_build/windows-nsis
     bash ./build-complete --sign --sign-pkcs12=<pkcs12-file> --sign-pkcs12-pass=<pkcs12-file-password> --sign-timestamp="<timestamp-url>"
 )
+cd %CC_HERE%
 
 REM ##############################
 REM End ...
