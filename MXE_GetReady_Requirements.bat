@@ -42,7 +42,7 @@ if %INSIDE_UTILS_ENV_FLAG% EQU %INSIDE_UTILS_ENV_MINGW% (
   )
 )
 SetLocal DisableDelayedExpansion
-set PATH=%PATH%
+set PATH=%PATH%;D:\Program Files (x86)\Git\bin
 rem echo %PATH%
 
 echo Init HOME directory to here call batfile.
@@ -55,14 +55,34 @@ cd SayCV_MXE
 set HOME=%cd%
 
 set MINGW_PKG_DIR=%INSTALL_ENV_DIR_MINGW%\var\cache\mingw-get\packages
-mingw-get install msys-libtool msys-wget
+if not exist stamp_call_mingw_get (
+  mingw-get install msys-libtool msys-wget
+  touch stamp_call_mingw_get
+)
 
 if "1" == "1" (
   bash --login -i -c "mkdir -p usr/installed"
   cd usr/installed && touch check-requirements
   cd ../../
 )
-bash --login -i  -c "make pkg-config yasm unzip cmake"
+
+if not exist stamp_getready_requirements_update_checksum (
+  if "1" == "0" (
+    bash --login -i  -c "make update-downloaded-checksum-pkg-config"
+    bash --login -i  -c "make update-downloaded-checksum-yasm"
+    bash --login -i  -c "make update-downloaded-checksum-unzip"
+    bash --login -i  -c "make update-downloaded-checksum-cmake"
+  ) else (
+    bash --login -i  -c "make update-checksum-pkg-config"
+    bash --login -i  -c "make update-checksum-yasm"
+    bash --login -i  -c "make update-checksum-unzip"
+    bash --login -i  -c "make update-checksum-cmake"
+    touch stamp_getready_requirements_update_checksum
+  )
+)
+
+echo Start Make PKGS...
+bash --login -i -c "make pkg-config yasm unzip cmake"
 
 REM ##############################
 REM End ...
