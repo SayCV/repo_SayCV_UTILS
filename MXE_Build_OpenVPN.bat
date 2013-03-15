@@ -19,7 +19,8 @@ set /a INSIDE_UTILS_ENV_FLAG=0
 rem set other values to do some user cmds
 set /a EOF_ENV_CMD=0
 set /a EOF_ENV_BASH=1
-set /a EOF_ENV_FLAG=0
+set /a EOF_ENV_EOF=3
+set /a EOF_ENV_FLAG=3
 
 set INSTALL_ENV_DIR_MINGW=D:\MinGW
 set INSTALL_ENV_DIR_CYGWIN=D:\cygwin
@@ -81,7 +82,11 @@ if %errorlevel%==1(
 if %EOF_ENV_FLAG% EQU %EOF_ENV_CMD% (
   call :__subCall_CMD__
 ) else (
-  call :__subCall_BASH__
+  if %EOF_ENV_FLAG% EQU %EOF_ENV_BASH% (
+  	call :__subCall_BASH__
+  ) else (
+  	call :__subCall_EOF__
+  )
 )
 
 :__subCall_BASH__

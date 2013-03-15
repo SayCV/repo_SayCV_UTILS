@@ -6,4 +6,4 @@
 	url = https://SayCV@github.com/SayCV/SayCV_OpenVPN.git
 [submodule "SayCV_MXE"]
 	path = SayCV_MXE
-	url = https://github.com/mxe/mxe.git
+	url = https://SayCV@github.com/SayCV/SayCV_MXE.git
