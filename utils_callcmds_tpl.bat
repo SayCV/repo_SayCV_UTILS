@@ -20,7 +20,7 @@ rem set other values to do some user cmds
 set /a EOF_ENV_CMD=0
 set /a EOF_ENV_BASH=1
 set /a EOF_ENV_EOF=3
-set /a EOF_ENV_FLAG=3
+set /a EOF_ENV_FLAG=0
 
 set INSTALL_ENV_DIR_MINGW=D:\MinGW
 set INSTALL_ENV_DIR_CYGWIN=D:\cygwin
@@ -58,13 +58,18 @@ REM End ...
 REM ******************************
 
 :__subCall_Status_Code__
-if %errorlevel%==0 ( 
+if "%errorlevel%"=="0" ( 
 	echo Done Sucessful.
 	goto :__subCall_Call_Branch__
-)
-if %errorlevel%==1(
-	echo Done Failed.
-	goto :__subCall_Call_Branch__
+) else (
+  if "%errorlevel%"=="1" (
+  	echo Done Failed.
+  	goto :__subCall_Call_Branch__
+  ) else (
+    echo Not Found Error.
+    echo "errorlevel=%errorlevel%"
+  	goto :__subCall_Call_Branch__
+  )
 )
 
 :__subCall_Call_Branch__
