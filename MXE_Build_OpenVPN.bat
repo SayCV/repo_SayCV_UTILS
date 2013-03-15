@@ -52,6 +52,8 @@ set CC_HERE=%cd%
 REM ******************************
 REM Start ...
 REM ##############################
+echo "Check Requrements..."
+echo "man2html,"
 
 if "1" == "1" (
     echo "Build (unsigned):"
