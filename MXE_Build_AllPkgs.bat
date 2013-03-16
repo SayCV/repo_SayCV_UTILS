@@ -69,26 +69,14 @@ if "1" == "1" (
 
 if not exist stamp_getready_requirements_update_checksum (
   if "1" == "0" (
-    bash --login -i  -c "make update-downloaded-checksum-gtk-bin"
-    bash --login -i  -c "make update-downloaded-checksum-pkg-config"
-    bash --login -i  -c "make update-downloaded-checksum-yasm"
-    bash --login -i  -c "make update-downloaded-checksum-unzip"
-    bash --login -i  -c "make update-downloaded-checksum-cmake"
-    touch stamp_getready_requirements_update_checksum
+    call MXE_GetReady_Requirements.bat
   ) else (
-    bash --login -i  -c "make update-checksum-gtk-bin"
-    bash --login -i  -c "make update-checksum-pkg-config"
-    bash --login -i  -c "make update-checksum-yasm"
-    bash --login -i  -c "make update-checksum-unzip"
-    bash --login -i  -c "make update-checksum-cmake"
-    touch stamp_getready_requirements_update_checksum
+    call MXE_GetReady_Requirements.bat
   )
 )
 
-rem bash --login -i  -c "make update-downloaded-checksum-gtk-bin"
-
 echo SayCV_MXE: Start Make PKGS...
-bash --login -i -c "make pkg-config yasm unzip cmake"
+bash --login -i -c "make all -j 4 JOBS=4"
 
 REM ##############################
 REM End ...
