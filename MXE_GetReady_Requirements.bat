@@ -61,6 +61,7 @@ if not exist stamp_call_mingw_get (
 )
 
 if "1" == "1" (
+  echo SayCV_MXE: Hacked to Ignore check-requirements.
   bash --login -i -c "mkdir -p usr/installed"
   cd usr/installed && touch check-requirements
   cd ../../
@@ -81,7 +82,7 @@ if not exist stamp_getready_requirements_update_checksum (
   )
 )
 
-echo Start Make PKGS...
+echo SayCV_MXE: Start Make PKGS...
 bash --login -i -c "make pkg-config yasm unzip cmake"
 
 REM ##############################
