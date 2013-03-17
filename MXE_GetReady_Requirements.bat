@@ -88,7 +88,7 @@ if not exist stamp_getready_requirements_update_checksum (
 rem bash --login -i  -c "make update-downloaded-checksum-gtk-bin"
 
 echo SayCV_MXE: Start Make PKGS...
-bash --login -i -c "make pkg-config yasm unzip cmake"
+bash --login -i -c "make unzip pkg-config yasm cmake"
 
 REM ##############################
 REM End ...
