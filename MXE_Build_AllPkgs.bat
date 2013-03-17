@@ -76,7 +76,7 @@ if not exist stamp_getready_requirements_update_checksum (
 )
 
 echo SayCV_MXE: Start Make PKGS...
-bash --login -i -c "make all -j 4 JOBS=4"
+bash --login -i -c "make"
 
 REM ##############################
 REM End ...
