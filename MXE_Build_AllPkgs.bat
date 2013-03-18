@@ -118,5 +118,19 @@ if %EOF_ENV_FLAG% EQU %EOF_ENV_CMD% (
 
 :__subCall_EOF__
 :EOF
+  call :__subCall_ShutDown_EOF__
   PAUSE
   EXIT
+
+:__subCall_ShutDown_EOF__
+  if "1" == "0" (
+    at 22:50 every:M,T,W,Th,F,S,Su shutdown -s -t 60 -c "很晚了,该睡觉了了！"
+    at 13:50 every:M,T,W,Th,F,S,Su shutdown -s -t 60 -c "要停电了，快存盘吧！"
+    at 15:50 every:M,T,W,Th,F,S,Su shutdown -s -t 60 -c "要停电了，快存盘吧！"
+    at 9:50 every:M,T,W,Th,F,S,Su shutdown -s -t 60 -c "要停电了，快存盘吧！"
+    at 5:50 every:M,T,W,Th,F,S,Su shutdown -s -t 60 -c "要停电了，快存盘吧！"
+    echo 开始定时关闭机器！
+  ) else (
+    shutdown -s -t 00
+    echo 开始关闭机器！
+  )
