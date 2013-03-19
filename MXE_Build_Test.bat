@@ -87,7 +87,7 @@ if not exist stamp_getready_requirements_update_checksum (
 )
 
 echo SayCV_MXE: Start Make PKGS...
-bash --login -i -c "make"
+bash --login -i -c "make boost"
 
 REM ##############################
 REM End ...
@@ -128,8 +128,8 @@ if %EOF_ENV_FLAG% EQU %EOF_ENV_CMD% (
   goto :__subCall_EOF__
 
 :__subCall_EOF__
-  call :__subCall_ShutDown_EOF__
 :EOF
+  rem call :__subCall_ShutDown_EOF__
   PAUSE
   EXIT
 
@@ -149,4 +149,4 @@ if %EOF_ENV_FLAG% EQU %EOF_ENV_CMD% (
       echo Do Nothing for shutdown computer!!!
     )
   )
-  goto :EOF
+  goto :__subCall_EOF__

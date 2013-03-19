@@ -11,6 +11,12 @@ cd /d %~dp0
 rem echo set dos windows size : cols=113, lines=150, color=black
 rem mode con cols=113 lines=15 & color 0f
 
+rem set whether shutdown computer or not when call end with the batch.
+set /a END_WITH_SHUTDOWN_NO=0
+set /a END_WITH_SHUTDOWN_YES=1
+set /a END_WITH_SHUTDOWN_YES_TIME=2
+set /a END_WITH_SHUTDOWN_FLAG=0
+
 rem set other values to included both MinGW and Cygwin Env.
 set /a INSIDE_UTILS_ENV_MINGW=0
 set /a INSIDE_UTILS_ENV_CYGWIN=1
@@ -20,7 +26,7 @@ rem set other values to do some user cmds
 set /a EOF_ENV_CMD=0
 set /a EOF_ENV_BASH=1
 set /a EOF_ENV_EOF=3
-set /a EOF_ENV_FLAG=0
+set /a EOF_ENV_FLAG=3
 
 set INSTALL_ENV_DIR_MINGW=D:\MinGW
 set INSTALL_ENV_DIR_CYGWIN=D:\cygwin
@@ -42,7 +48,7 @@ if %INSIDE_UTILS_ENV_FLAG% EQU %INSIDE_UTILS_ENV_MINGW% (
   )
 )
 SetLocal DisableDelayedExpansion
-set PATH=%PATH%
+set PATH=%PATH%;D:\Program Files (x86)\Git\bin
 rem echo %PATH%
 
 echo Init HOME directory to here call batfile.
@@ -51,8 +57,17 @@ set HOME=%cd%
 REM ******************************
 REM Start ...
 REM ##############################
+cd SayCV_MXE
+set HOME=%cd%
+
+rem END_WITH_SHUTDOWN_NO=0
+rem END_WITH_SHUTDOWN_YES=1
+rem END_WITH_SHUTDOWN_YES_TIME=2
+set /a END_WITH_SHUTDOWN_FLAG=0
+
 cd %HOME%/SayCV_MXE/tmp/agg/agg-2.5
 diff -ur configure.in.bak configure.in > %HOME%/SayCV_MXE/src/agg-2-fix-mingw-on-windows.patch
+
 
 REM ##############################
 REM End ...
@@ -93,6 +108,25 @@ if %EOF_ENV_FLAG% EQU %EOF_ENV_CMD% (
   goto :__subCall_EOF__
 
 :__subCall_EOF__
+  call :__subCall_ShutDown_EOF__
 :EOF
   PAUSE
   EXIT
+
+:__subCall_ShutDown_EOF__
+  if "END_WITH_SHUTDOWN_FLAG" == "END_WITH_SHUTDOWN_YES_TIME" (
+    at 22:50 every:M,T,W,Th,F,S,Su shutdown -s -t 60 -c "很晚了,该睡觉了了！"
+    at 13:50 every:M,T,W,Th,F,S,Su shutdown -s -t 60 -c "要停电了，快存盘吧！"
+    at 15:50 every:M,T,W,Th,F,S,Su shutdown -s -t 60 -c "要停电了，快存盘吧！"
+    at 9:50 every:M,T,W,Th,F,S,Su shutdown -s -t 60 -c "要停电了，快存盘吧！"
+    at 5:50 every:M,T,W,Th,F,S,Su shutdown -s -t 60 -c "要停电了，快存盘吧！"
+    echo 开始定时关闭机器！
+  ) else (
+    if "END_WITH_SHUTDOWN_FLAG" == "END_WITH_SHUTDOWN_YES" (
+      shutdown -s -t 00
+      echo 开始关闭机器！
+    ) else (
+      echo Do Nothing for shutdown computer!!!
+    )
+  )
+  goto :EOF
