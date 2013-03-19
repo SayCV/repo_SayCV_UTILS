@@ -78,28 +78,26 @@ if "1" == "1" (
   cd ../../
 )
 
-if not exist stamp_getready_requirements_update_checksum (
+if not exist stamp_build_priority_pkgs_update_checksum (
   if "1" == "0" (
-    bash --login -i  -c "make update-downloaded-checksum-gtk-bin"
-    bash --login -i  -c "make update-downloaded-checksum-pkg-config"
-    bash --login -i  -c "make update-downloaded-checksum-yasm"
-    bash --login -i  -c "make update-downloaded-checksum-unzip"
-    bash --login -i  -c "make update-downloaded-checksum-cmake"
-    touch stamp_getready_requirements_update_checksum
+    bash --login -i  -c "make update-downloaded-checksum-make"
+    bash --login -i  -c "make update-downloaded-checksum-autoconf"
+    bash --login -i  -c "make update-downloaded-checksum-automake"
+    bash --login -i  -c "make update-downloaded-checksum-gettext"
+    bash --login -i  -c "make update-downloaded-checksum-libtool"
+    touch stamp_build_priority_pkgs_update_checksum
   ) else (
-    bash --login -i  -c "make update-checksum-gtk-bin"
-    bash --login -i  -c "make update-checksum-pkg-config"
-    bash --login -i  -c "make update-checksum-yasm"
-    bash --login -i  -c "make update-checksum-unzip"
-    bash --login -i  -c "make update-checksum-cmake"
-    touch stamp_getready_requirements_update_checksum
+    bash --login -i  -c "make update-checksum-make"
+    bash --login -i  -c "make update-checksum-autoconf"
+    bash --login -i  -c "make update-checksum-automake"
+    bash --login -i  -c "make update-checksum-gettext"
+    bash --login -i  -c "make update-checksum-libtool"
+    touch stamp_build_priority_pkgs_update_checksum
   )
 )
 
-rem bash --login -i  -c "make update-downloaded-checksum-gtk-bin"
-
 echo SayCV_MXE: Start Make PKGS...
-bash --login -i -c "make unzip pkg-config yasm cmake"
+bash --login -i -c "make make autoconf automake gettext libtool"
 
 REM ##############################
 REM End ...
