@@ -81,6 +81,7 @@ if "1" == "1" (
 if not exist stamp_build_priority_pkgs_update_checksum (
   if "1" == "0" (
     bash --login -i  -c "make update-downloaded-checksum-make"
+    bash --login -i  -c "make update-downloaded-checksum-m4"
     bash --login -i  -c "make update-downloaded-checksum-autoconf"
     bash --login -i  -c "make update-downloaded-checksum-automake"
     bash --login -i  -c "make update-downloaded-checksum-gettext"
@@ -88,6 +89,7 @@ if not exist stamp_build_priority_pkgs_update_checksum (
     touch stamp_build_priority_pkgs_update_checksum
   ) else (
     bash --login -i  -c "make update-checksum-make"
+    bash --login -i  -c "make update-checksum-m4"
     bash --login -i  -c "make update-checksum-autoconf"
     bash --login -i  -c "make update-checksum-automake"
     bash --login -i  -c "make update-checksum-gettext"
