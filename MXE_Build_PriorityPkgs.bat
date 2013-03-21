@@ -81,6 +81,7 @@ if "1" == "1" (
 if not exist stamp_build_priority_pkgs_update_checksum (
   if "1" == "0" (
     bash --login -i  -c "make update-downloaded-checksum-make"
+    bash --login -i  -c "make update-downloaded-checksum-gperf"
     bash --login -i  -c "make update-downloaded-checksum-m4"
     bash --login -i  -c "make update-downloaded-checksum-autoconf"
     bash --login -i  -c "make update-downloaded-checksum-automake"
@@ -100,7 +101,6 @@ if not exist stamp_build_priority_pkgs_update_checksum (
 )
 
 echo SayCV_MXE: Start Make PKGS...
-bash --login -i  -c "make update-checksum-gperf"
 bash --login -i -c "make make autoconf automake gettext libtool"
 
 REM ##############################
