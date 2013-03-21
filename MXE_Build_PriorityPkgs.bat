@@ -89,7 +89,7 @@ if not exist stamp_build_priority_pkgs_update_checksum (
     touch stamp_build_priority_pkgs_update_checksum
   ) else (
     bash --login -i  -c "make update-checksum-make"
-    bash --login -i  -c "make update-checksum-gpref"
+    bash --login -i  -c "make update-checksum-gperf"
     bash --login -i  -c "make update-checksum-m4"
     bash --login -i  -c "make update-checksum-autoconf"
     bash --login -i  -c "make update-checksum-automake"
