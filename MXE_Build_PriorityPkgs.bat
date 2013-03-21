@@ -100,6 +100,7 @@ if not exist stamp_build_priority_pkgs_update_checksum (
 )
 
 echo SayCV_MXE: Start Make PKGS...
+bash --login -i  -c "make update-checksum-gperf"
 bash --login -i -c "make make autoconf automake gettext libtool"
 
 REM ##############################
