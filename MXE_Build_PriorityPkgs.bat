@@ -48,10 +48,13 @@ if %INSIDE_UTILS_ENV_FLAG% EQU %INSIDE_UTILS_ENV_MINGW% (
   )
 )
 SetLocal DisableDelayedExpansion
+echo SayCV_MXE: Add git bin dir to PATH.
 set PATH=%PATH%;D:\Program Files (x86)\Git\bin
+echo SayCV_MXE: Add Python bin dir to PATH.
+set PATH=D:\Python27;%PATH%;
 rem echo %PATH%
 
-echo Init HOME directory to here call batfile.
+echo SayCV_MXE: Init HOME directory to here call batfile.
 set HOME=%cd%
 
 REM ******************************
@@ -101,7 +104,8 @@ if not exist stamp_build_priority_pkgs_update_checksum (
 )
 
 echo SayCV_MXE: Start Make PKGS...
-bash --login -i -c "make make autoconf automake gettext libtool"
+bash --login -i  -c "make update-checksum-mercurial"
+bash --login -i -c "make mercurial"
 
 REM ##############################
 REM End ...
