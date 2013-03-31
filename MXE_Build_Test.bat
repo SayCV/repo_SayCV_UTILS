@@ -90,7 +90,14 @@ if not exist stamp_getready_requirements_update_checksum (
 )
 
 echo SayCV_MXE: Start Make PKGS...
-bash --login -i -c "make boost"
+rem bash --login -i  -c "make update-checksum-mercurial"
+cd SayCV_MXE
+cd usr/installed
+rm -f mercurial
+cd ../tmp/mercurial/mercurial-2.5.2
+rm -f stamp_cfg_mercurial-2.5.2
+cd ../../../../../
+bash --login -i -c "make mercurial"
 
 REM ##############################
 REM End ...
