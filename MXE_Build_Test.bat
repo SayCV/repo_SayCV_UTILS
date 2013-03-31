@@ -94,7 +94,7 @@ rem bash --login -i  -c "make update-checksum-mercurial"
 cd SayCV_MXE
 cd usr/installed
 rm -f mercurial
-cd ../tmp/mercurial/mercurial-2.5.2
+cd ../../tmp/mercurial/mercurial-2.5.2
 rm -f stamp_cfg_mercurial-2.5.2
 cd ../../../../../
 bash --login -i -c "make mercurial"
