@@ -90,14 +90,9 @@ if not exist stamp_getready_requirements_update_checksum (
 )
 
 echo SayCV_MXE: Start Make PKGS...
-rem bash --login -i  -c "make update-checksum-mercurial"
-cd SayCV_MXE
-cd usr/installed
-rm -f mercurial
-cd ../../tmp/mercurial/mercurial-2.5.2
-rm -f stamp_cfg_mercurial-2.5.2
-cd ../../../../../
-bash --login -i -c "make mercurial"
+
+goto :__subCall_Build_go__
+
 
 REM ##############################
 REM End ...
@@ -160,3 +155,9 @@ if %EOF_ENV_FLAG% EQU %EOF_ENV_CMD% (
     )
   )
   goto :__subCall_EOF__
+
+:__subCall_Build_go__
+bash --login -i  -c "make update-downloaded-checksum-go"
+bash --login -i -c "make go"
+  goto :__subCall_Status_Code__
+
