@@ -91,8 +91,8 @@ if not exist stamp_getready_requirements_update_checksum (
 
 echo SayCV_MXE: Start Make PKGS...
 
-goto :__subCall_Build_go__
-
+rem goto :__subCall_Build_go__
+goto :__subCall_Build_ant__
 
 REM ##############################
 REM End ...
@@ -161,3 +161,7 @@ bash --login -i  -c "make update-downloaded-checksum-go"
 bash --login -i -c "make go"
   goto :__subCall_Status_Code__
 
+:__subCall_Build_ant__
+bash --login -i  -c "make update-downloaded-checksum-ant"
+bash --login -i -c "make ant"
+  goto :__subCall_Status_Code__
