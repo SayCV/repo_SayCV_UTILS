@@ -91,9 +91,8 @@ if not exist stamp_getready_requirements_update_checksum (
 
 echo SayCV_MXE: Start Make PKGS...
 
-rem goto :__subCall_Build_go__
-rem goto :__subCall_Build_ant__
-    goto :__subCall_Build_arduino__
+call :__subCall_Build_PKGs__ go
+rem go ant arduino
 
 REM ##############################
 REM End ...
@@ -157,17 +156,7 @@ if %EOF_ENV_FLAG% EQU %EOF_ENV_CMD% (
   )
   goto :__subCall_EOF__
 
-:__subCall_Build_go__
-bash --login -i  -c "make update-downloaded-checksum-go"
-bash --login -i -c "make go"
-  goto :__subCall_Status_Code__
-
-:__subCall_Build_ant__
-bash --login -i  -c "make update-downloaded-checksum-ant"
-bash --login -i -c "make ant"
-  goto :__subCall_Status_Code__
-
-:__subCall_Build_arduino__
-bash --login -i  -c "make update-downloaded-checksum-arduino"
-bash --login -i -c "make arduino"
+:__subCall_Build_PKGs__
+bash --login -i  -c "make update-downloaded-checksum-%1"
+bash --login -i -c "make %1"
   goto :__subCall_Status_Code__
