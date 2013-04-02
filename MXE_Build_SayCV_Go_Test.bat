@@ -85,7 +85,7 @@ rem go get github.com/lxn/walk
 cd %GOROOT%/src/pkg/github.com/lxn/walk/examples
 set HOME_TMP=%cd%
 
-call :__subCall_Build_SAYCV_GO_TEST__ logview
+call :__subCall_Build_SAYCV_GO_TEST__ dialog
 rem declarative dialog drawing externalwidgets filebrowser imageicon imageviewer img
 rem listbox logview notifyicon progressindicator tableview webview
 
