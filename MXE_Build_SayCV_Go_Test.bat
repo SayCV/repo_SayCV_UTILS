@@ -70,7 +70,6 @@ echo SayCV_MXE: Set JAVA_HOME Env.
 set JAVA_HOME=D:\cygwin\opt\java\jdk1.6.0_20
 set JAVA_HOME=D:\cygwin\opt\java\jdk1.7.0_07
 
-
 set HOME_TMP=%cd%
 set SayCV_MXE_HOME=%HOME_TMP%/SayCV_MXE
 echo SayCV_MXE: Add Apache ant bin dir to PATH.
@@ -82,10 +81,15 @@ set PATH=%GOROOT%/bin;%PATH%
 
 rem cd SayCV_Go
 rem go get github.com/SayCV/go-walk
-go get github.com/lxn/walk
-go get github.com/lxn/polyglot
-go get github.com/lxn/polyglot/polyglot
-go get github.com/lxn/walk/tools/ui2walk
+rem go get github.com/lxn/walk
+cd %GOROOT%/src/pkg/github.com/lxn/walk/examples
+set HOME_TMP=%cd%
+
+call :__subCall_Build_SAYCV_GO_TEST__ logview
+rem declarative dialog drawing externalwidgets filebrowser imageicon imageviewer img
+rem listbox logview notifyicon progressindicator tableview webview
+
+cd %HOME_TMP%
 
 REM ##############################
 REM End ...
@@ -148,3 +152,15 @@ if %EOF_ENV_FLAG% EQU %EOF_ENV_CMD% (
     )
   )
   goto :EOF
+
+:__subCall_Build_SAYCV_GO_TEST__
+	cd %HOME_TMP%
+	cd %1
+	if exist build.bat (
+		call build.bat
+	) else (
+		go build
+	)
+	echo Run Programes...
+	%1.exe
+  goto :__subCall_Status_Code__
