@@ -27,7 +27,7 @@ rem set other values to do some user cmds
 set /a EOF_ENV_CMD=0
 set /a EOF_ENV_BASH=1
 set /a EOF_ENV_EOF=3
-set /a EOF_ENV_FLAG=0
+set /a EOF_ENV_FLAG=3
 
 set INSTALL_ENV_DIR_MINGW=D:\MinGW
 set INSTALL_ENV_DIR_CYGWIN=D:\cygwin
@@ -80,8 +80,8 @@ set GOROOT=%SayCV_MXE_HOME%/usr/opt/go
 set PATH=%GOROOT%/bin;%PATH%
 
 rem cd SayCV_Go
-go get github.com/SayCV/go-winapi
-
+rem go get github.com/SayCV/go-walk
+go get github.com/lxn/walk
 
 REM ##############################
 REM End ...
