@@ -20,6 +20,7 @@ set /a END_WITH_SHUTDOWN_FLAG=0
 rem set other values to included both MinGW and Cygwin Env.
 set /a INSIDE_UTILS_ENV_MINGW=0
 set /a INSIDE_UTILS_ENV_CYGWIN=1
+set /a INSIDE_UTILS_ENV_BOTHALL=2
 set /a INSIDE_UTILS_ENV_FLAG=0
 
 rem set other values to do some user cmds
@@ -41,10 +42,14 @@ if %INSIDE_UTILS_ENV_FLAG% EQU %INSIDE_UTILS_ENV_MINGW% (
     echo Init Included Cygwin env.
     set "PATH=%INSTALL_ENV_DIR_CYGWIN%\bin;!PATH!"
   ) else (
-    echo Init Included MinGW and Cygwin env.
-    set "PATH=%INSTALL_ENV_DIR_CYGWIN%\bin;!PATH!"
-    set "PATH=%INSTALL_ENV_DIR_MINGW%\bin;!PATH!"
-    set "PATH=%INSTALL_ENV_DIR_MINGW%\msys\1.0\bin;%INSTALL_ENV_DIR_MINGW%\msys\1.0\local\bin;!PATH!"
+    if %INSIDE_UTILS_ENV_FLAG% EQU %INSIDE_UTILS_ENV_BOTHALL% (
+      echo Init Included MinGW and Cygwin env.
+      set "PATH=%INSTALL_ENV_DIR_CYGWIN%\bin;!PATH!"
+      set "PATH=%INSTALL_ENV_DIR_MINGW%\bin;!PATH!"
+      set "PATH=%INSTALL_ENV_DIR_MINGW%\msys\1.0\bin;%INSTALL_ENV_DIR_MINGW%\msys\1.0\local\bin;!PATH!"
+    ) else (
+      echo Init Excluded MinGW and Cygwin env.
+    )
   )
 )
 SetLocal DisableDelayedExpansion
