@@ -62,7 +62,19 @@ REM ******************************
 REM Start ...
 REM ##############################
 
+echo SayCV_MXE: Set JAVA_HOME Env.
+set JAVA_HOME=D:\cygwin\opt\java\jdk1.6.0_20
+set JAVA_HOME=D:\cygwin\opt\java\jdk1.7.0_07
 
+set SayCV_MXE_HOME=%HOME%/../repo_SayCV_UTILS/SayCV_MXE
+echo SayCV_MXE: Add Apache ant bin dir to PATH.
+set PATH=%SayCV_MXE_HOME%/usr/opt/ant/bin;%PATH%;
+
+echo SayCV_MXE: Add Google Go bin dir to PATH.
+set GOROOT=%SayCV_MXE_HOME%/usr/opt/go
+set PATH=%GOROOT%/bin;%PATH%
+
+go get github.com/SayCV/go-winapi
 
 
 REM ##############################

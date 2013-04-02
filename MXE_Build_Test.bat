@@ -63,11 +63,6 @@ REM ##############################
 cd SayCV_MXE
 set HOME=%cd%
 
-rem END_WITH_SHUTDOWN_NO=0
-rem END_WITH_SHUTDOWN_YES=1
-rem END_WITH_SHUTDOWN_YES_TIME=2
-set /a END_WITH_SHUTDOWN_FLAG=0
-
 set MINGW_PKG_DIR=%INSTALL_ENV_DIR_MINGW%\var\cache\mingw-get\packages
 if not exist stamp_call_mingw_get (
   mingw-get install msys-libtool msys-wget
