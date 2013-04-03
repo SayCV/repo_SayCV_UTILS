@@ -92,8 +92,9 @@ if not exist stamp_getready_requirements_update_checksum (
 
 echo SayCV_MXE: Start Make PKGS...
 
-call :__subCall_Build_PKGs__ go
-rem go ant arduino
+call :__subCall_Build_PKGs__ SublimeText2
+rem go ant arduino SublimeText2
+rem 
 
 REM ##############################
 REM End ...
