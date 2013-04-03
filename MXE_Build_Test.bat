@@ -55,6 +55,7 @@ if %INSIDE_UTILS_ENV_FLAG% EQU %INSIDE_UTILS_ENV_MINGW% (
 SetLocal DisableDelayedExpansion
 echo SayCV_MXE: Add git bin dir to PATH.
 set PATH=%PATH%;D:\Program Files (x86)\Git\bin
+set PATH=%PATH%;D:\Program Files\Git\bin
 echo SayCV_MXE: Add Python bin dir to PATH.
 set PATH=D:\Python27;%PATH%;
 rem echo %PATH%
@@ -157,6 +158,6 @@ if %EOF_ENV_FLAG% EQU %EOF_ENV_CMD% (
   goto :__subCall_EOF__
 
 :__subCall_Build_PKGs__
-bash --login -i  -c "make update-downloaded-checksum-%1"
+bash --login -i  -c "make update-checksum-%1"
 bash --login -i -c "make %1"
   goto :__subCall_Status_Code__

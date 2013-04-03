@@ -55,6 +55,7 @@ if %INSIDE_UTILS_ENV_FLAG% EQU %INSIDE_UTILS_ENV_MINGW% (
 SetLocal DisableDelayedExpansion
 echo SayCV_MXE: Add git bin dir to PATH.
 set PATH=%PATH%;D:\Program Files (x86)\Git\bin
+set PATH=%PATH%;D:\Program Files\Git\bin
 echo SayCV_MXE: Add Python bin dir to PATH.
 set PATH=D:\Python27;%PATH%;
 rem echo %PATH%
