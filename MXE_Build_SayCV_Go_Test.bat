@@ -82,8 +82,12 @@ echo SayCV_MXE: Add SayCV_MXE bin dir to PATH.
 set PATH=%PATH%;%SayCV_MXE_HOME%/usr/bin
 
 ::: ##############################
+::: Install gocode and MarGo
+call :__subCall_Build_SAYCV_GO_IDE_INSTALL__
+
+::: ##############################
 ::: Example: So Simple, So Ugly
-call :__subCall_Build_SAYCV_GO_UIK_TEST__ uiktest
+rem call :__subCall_Build_SAYCV_GO_UIK_TEST__ uiktest
 rem uikradio uiktest 
 ::: ##############################
 ::: Example: So Useful, So Good
@@ -155,17 +159,11 @@ if %EOF_ENV_FLAG% EQU %EOF_ENV_CMD% (
   )
   goto :EOF
 
-:__subCall_Build_SAYCV_GO_WALK_TEST__
-	rem go get github.com/lxn/walk
-	cd %GOROOT%/src/pkg/github.com/lxn/walk/examples
-	cd %1
-	if exist build.bat (
-		call build.bat
-	) else (
-		go build
-	)
-	echo Run Programes...
-	%1.exe
+:__subCall_Build_SAYCV_GO_IDE_INSTALL__
+	go get -u github.com/nsf/gocode
+	go get -u github.com/DisposaBoy/MarGo
+	go install github.com/nsf/gocode
+	go install github.com/DisposaBoy/MarGo
   goto :__subCall_Status_Code__
 
 :__subCall_Build_SAYCV_GO_UIK_TEST__
@@ -181,4 +179,18 @@ if %EOF_ENV_FLAG% EQU %EOF_ENV_CMD% (
 	echo Run Programes...
 	%1.exe
   goto :__subCall_Status_Code__
+
+:__subCall_Build_SAYCV_GO_WALK_TEST__
+	rem go get github.com/lxn/walk
+	cd %GOROOT%/src/pkg/github.com/lxn/walk/examples
+	cd %1
+	if exist build.bat (
+		call build.bat
+	) else (
+		go build
+	)
+	echo Run Programes...
+	%1.exe
+  goto :__subCall_Status_Code__
+
 

@@ -55,10 +55,8 @@ if %INSIDE_UTILS_ENV_FLAG% EQU %INSIDE_UTILS_ENV_MINGW% (
 SetLocal DisableDelayedExpansion
 echo SayCV_MXE: Add git bin dir to PATH.
 set PATH=%PATH%;D:\Program Files (x86)\Git\bin
-set PATH=%PATH%;D:\Program Files\Git\bin
 echo SayCV_MXE: Add Python bin dir to PATH.
 set PATH=D:\Python27;%PATH%
-rem echo %PATH%
 
 echo SayCV_MXE: echo Init HOME directory to here call batfile.
 set HOME=%cd%
@@ -66,36 +64,57 @@ set HOME=%cd%
 REM ******************************
 REM Start ...
 REM ##############################
-cd SayCV_MXE
-set HOME=%cd%
 
-set MINGW_PKG_DIR=%INSTALL_ENV_DIR_MINGW%\var\cache\mingw-get\packages
-if not exist stamp_call_mingw_get (
-  mingw-get install msys-libtool msys-wget
-  touch stamp_call_mingw_get
-)
+echo SayCV_MXE: Set JAVA_HOME Env.
+set JAVA_HOME=D:\cygwin\opt\java\jdk1.6.0_20
+set JAVA_HOME=D:\cygwin\opt\java\jdk1.7.0_07
 
-if "1" == "1" (
-  echo SayCV_MXE: Hacked to Ignore check-requirements.
-  bash --login -i -c "mkdir -p usr/installed"
-  cd usr/installed && touch check-requirements
-  cd ../../
-)
+set HOME_TMP=%cd%
+set SayCV_MXE_HOME=%HOME_TMP%/SayCV_MXE
+echo SayCV_MXE: Add Apache ant bin dir to PATH.
+set PATH=%SayCV_MXE_HOME%/usr/opt/ant/bin;%PATH%;
 
-if not exist stamp_getready_requirements_update_checksum (
-  if "1" == "0" (
-    call MXE_GetReady_Requirements.bat
-  ) else (
-    call MXE_GetReady_Requirements.bat
-  )
-)
+echo SayCV_MXE: Add Google Go bin dir to PATH.
+set GOROOT=%SayCV_MXE_HOME%/usr/opt/go
+set PATH=%GOROOT%/bin;%PATH%
 
-echo SayCV_MXE: Start Make PKGS...
+echo SayCV_MXE: Add SayCV_MXE bin dir to PATH.
+set PATH=%PATH%;%SayCV_MXE_HOME%/usr/bin
 
+echo SayCV_MXE: Set SUBLIMETEXT2_HOME Env.
+set SUBLIMETEXT2_HOME=%SayCV_MXE_HOME%/usr/opt/SublimeText2
+echo SayCV_MXE: Add Sublime Text 2 bin dir to PATH.
+set PATH=%PATH%;%SUBLIMETEXT2_HOME%
+
+::: ##############################
+::: Install Sublime Text 2
+echo SayCV_MXE: Start Install PKGS: Sublime Text 2
 call :__subCall_Build_PKGs__ SublimeText2
-rem go ant arduino SublimeText2
-rem 
+::: ##############################
+::: Install Sublime Package Control
+echo SayCV_MXE: Pls Run Sublime Text 2 and Press the ctrl+` shortcut
+echo SayCV_MXE: to Install Sublime Package Control
+echo SayCV_MXE: Once open, paste the following command into the console.
+echo import urllib2,os; pf='Package Control.sublime-package'; ipp=sublime.installed_packages_path(); os.makedirs(ipp) if not os.path.exists(ipp) else None; urllib2.install_opener(urllib2.build_opener(urllib2.ProxyHandler())); open(os.path.join(ipp,pf),'wb').write(urllib2.urlopen('http://sublime.wbond.net/'+pf.replace(' ','%20')).read()); print('Please restart Sublime Text to finish installation')
+echo SayCV_MXE: and then reRUN Sublime Text 2
+pause
+start sublime_text.exe
+::: ##############################
+::: Install GoSublime
+echo SayCV_MXE: Installation is through the Sublime Package Control. 
+echo SayCV_MXE: This is accessed via the ctrl+shift+p shortcut. 
+echo SayCV_MXE: Once open, paste the following command into the console.
+echo install
+echo gosublime
+pause
+start sublime_text.exe
+::: ##############################
+::: Install gocode and MarGo
+echo SayCV_MXE: Start Install gocode and MarGo
+call :__subCall_Build_SAYCV_GO_IDE_LAST_INSTALL__
 
+::: ##############################
+cd %HOME%
 REM ##############################
 REM End ...
 REM ******************************
@@ -135,8 +154,8 @@ if %EOF_ENV_FLAG% EQU %EOF_ENV_CMD% (
   goto :__subCall_EOF__
 
 :__subCall_EOF__
+  call :__subCall_ShutDown_EOF__
 :EOF
-  rem call :__subCall_ShutDown_EOF__
   PAUSE
   EXIT
 
@@ -156,9 +175,19 @@ if %EOF_ENV_FLAG% EQU %EOF_ENV_CMD% (
       echo Do Nothing for shutdown computer!!!
     )
   )
-  goto :__subCall_EOF__
+  goto :EOF
 
 :__subCall_Build_PKGs__
 	bash --login -i -c "make update-checksum-%1"
 	bash --login -i -c "make %1"
   goto :__subCall_Status_Code__
+
+
+:__subCall_Build_SAYCV_GO_IDE_LAST_INSTALL__
+	go get -u github.com/nsf/gocode
+	go get -u github.com/DisposaBoy/MarGo
+	go install github.com/nsf/gocode
+	go install github.com/DisposaBoy/MarGo
+  goto :__subCall_Status_Code__
+
+

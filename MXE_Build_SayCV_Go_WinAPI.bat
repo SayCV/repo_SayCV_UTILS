@@ -71,7 +71,6 @@ echo SayCV_MXE: Set JAVA_HOME Env.
 set JAVA_HOME=D:\cygwin\opt\java\jdk1.6.0_20
 set JAVA_HOME=D:\cygwin\opt\java\jdk1.7.0_07
 
-
 set HOME_TMP=%cd%
 set SayCV_MXE_HOME=%HOME_TMP%/SayCV_MXE
 echo SayCV_MXE: Add Apache ant bin dir to PATH.
