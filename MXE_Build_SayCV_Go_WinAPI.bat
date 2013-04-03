@@ -57,7 +57,7 @@ echo SayCV_MXE: Add git bin dir to PATH.
 set PATH=%PATH%;D:\Program Files (x86)\Git\bin
 set PATH=%PATH%;D:\Program Files\Git\bin
 echo SayCV_MXE: Add Python bin dir to PATH.
-set PATH=D:\Python27;%PATH%;
+set PATH=D:\Python27;%PATH%
 rem echo %PATH%
 
 echo SayCV_MXE: echo Init HOME directory to here call batfile.

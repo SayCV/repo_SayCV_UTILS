@@ -56,8 +56,7 @@ SetLocal DisableDelayedExpansion
 echo SayCV_MXE: Add git bin dir to PATH.
 set PATH=%PATH%;D:\Program Files (x86)\Git\bin
 echo SayCV_MXE: Add Python bin dir to PATH.
-set PATH=D:\Python27;%PATH%;
-rem echo %PATH%
+set PATH=D:\Python27;%PATH%
 
 echo SayCV_MXE: echo Init HOME directory to here call batfile.
 set HOME=%cd%
@@ -78,6 +77,13 @@ set PATH=%SayCV_MXE_HOME%/usr/opt/ant/bin;%PATH%;
 echo SayCV_MXE: Add Google Go bin dir to PATH.
 set GOROOT=%SayCV_MXE_HOME%/usr/opt/go
 set PATH=%GOROOT%/bin;%PATH%
+
+echo SayCV_MXE: Add SayCV_MXE bin dir to PATH.
+set PATH=%PATH%;%SayCV_MXE_HOME%/usr/bin
+
+go get github.com/skelterjohn/go.uik
+
+goto :__subCall_Status_Code__
 
 rem cd SayCV_Go
 rem go get github.com/SayCV/go-walk
