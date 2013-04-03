@@ -81,22 +81,18 @@ set PATH=%GOROOT%/bin;%PATH%
 echo SayCV_MXE: Add SayCV_MXE bin dir to PATH.
 set PATH=%PATH%;%SayCV_MXE_HOME%/usr/bin
 
-go get github.com/skelterjohn/go.uik
-
-goto :__subCall_Status_Code__
-
-rem cd SayCV_Go
-rem go get github.com/SayCV/go-walk
-rem go get github.com/lxn/walk
-cd %GOROOT%/src/pkg/github.com/lxn/walk/examples
-set HOME_TMP=%cd%
-
-call :__subCall_Build_SAYCV_GO_TEST__ notifyicon
+::: ##############################
+::: Example: So Simple, So Ugly
+call :__subCall_Build_SAYCV_GO_UIK_TEST__ uiktest
+rem uikradio uiktest 
+::: ##############################
+::: Example: So Useful, So Good
+rem call :__subCall_Build_SAYCV_GO_WALK_TEST__ notifyicon
 rem declarative dialog drawing externalwidgets filebrowser imageicon imageviewer img
 rem listbox logview notifyicon progressindicator tableview webview
 
-cd %HOME_TMP%
-
+::: ##############################
+cd %HOME%
 REM ##############################
 REM End ...
 REM ******************************
@@ -159,8 +155,9 @@ if %EOF_ENV_FLAG% EQU %EOF_ENV_CMD% (
   )
   goto :EOF
 
-:__subCall_Build_SAYCV_GO_TEST__
-	cd %HOME_TMP%
+:__subCall_Build_SAYCV_GO_WALK_TEST__
+	rem go get github.com/lxn/walk
+	cd %GOROOT%/src/pkg/github.com/lxn/walk/examples
 	cd %1
 	if exist build.bat (
 		call build.bat
@@ -170,3 +167,18 @@ if %EOF_ENV_FLAG% EQU %EOF_ENV_CMD% (
 	echo Run Programes...
 	%1.exe
   goto :__subCall_Status_Code__
+
+:__subCall_Build_SAYCV_GO_UIK_TEST__
+	rem go get github.com/AllenDang/w32
+	rem go get github.com/skelterjohn/go.uik
+	cd %GOROOT%/src/pkg/github.com/skelterjohn/go.uik/examples
+	cd %1
+	if exist build.bat (
+		call build.bat
+	) else (
+		go build
+	)
+	echo Run Programes...
+	%1.exe
+  goto :__subCall_Status_Code__
+
