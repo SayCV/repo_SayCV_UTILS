@@ -77,8 +77,18 @@ echo SayCV_MXE: Add Apache ant bin dir to PATH.
 set PATH=%SayCV_MXE_HOME%/usr/opt/ant/bin;%PATH%;
 
 echo SayCV_MXE: Add Google Go bin dir to PATH.
+set GOOS=windows
+set GOARCH=386
 set GOROOT=%SayCV_MXE_HOME%/usr/opt/go
 set PATH=%GOROOT%/bin;%PATH%
+
+echo Goplay is a web interface for experimenting with Go code.
+echo It is similar to the Go Playground: http://golang.org/doc/play/
+echo To use goplay:
+cd %GOROOT%/misc/goplay
+go install
+mv goplay.exe %GOROOT%/bin/goplay.exe
+echo Done goplay
 
 rem cd SayCV_Go
 rem go get github.com/SayCV/go-walk

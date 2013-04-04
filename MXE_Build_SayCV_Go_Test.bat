@@ -75,12 +75,24 @@ echo SayCV_MXE: Add Apache ant bin dir to PATH.
 set PATH=%SayCV_MXE_HOME%/usr/opt/ant/bin;%PATH%;
 
 echo SayCV_MXE: Add Google Go bin dir to PATH.
+set GOOS=windows
+set GOARCH=386
 set GOROOT=%SayCV_MXE_HOME%/usr/opt/go
 set PATH=%GOROOT%/bin;%PATH%
+set PATH=%GOROOT%/pkg/tool/windows_386;%PATH%
 
 echo SayCV_MXE: Add SayCV_MXE bin dir to PATH.
 set PATH=%PATH%;%SayCV_MXE_HOME%/usr/bin
 
+::: ##############################
+::: Install Go mandelbrot
+call :__subCall_Build_SAYCV_GO_mandelbrot_INSTALL__
+::: ##############################
+::: Install Go Language Library for SVG generation
+call :__subCall_Build_SAYCV_GO_SVGO_INSTALL__ barchart
+rem No Para Means all
+rem barchart bubtrail bulletgraph
+rem pmap
 ::: ##############################
 ::: Install geo: Geographical calculations in Go
 call :__subCall_Build_SAYCV_GO_GEO_INSTALL__
@@ -163,6 +175,18 @@ if %EOF_ENV_FLAG% EQU %EOF_ENV_CMD% (
     )
   )
   goto :EOF
+
+:__subCall_Build_SAYCV_GO_mandelbrot_INSTALL__
+rem	go get github.com/Nightgunner5/mandelbrot
+rem	goto :__subCall_Status_Code__
+
+:__subCall_Build_SAYCV_GO_SVGO_INSTALL__
+	go get github.com/ajstarks/svgo
+	go install github.com/ajstarks/svgo/...
+	cd %GOROOT%/src/pkg/github.com/ajstarks/svgo
+	rem quag svgdef svgopher
+	rem call :__subCall_Build_SAYCV_GO_COMMON_TEST__ %1
+  goto :__subCall_Status_Code__
 
 :__subCall_Build_SAYCV_GO_GEO_INSTALL__
 	go get -u github.com/kellydunn/golang-geo
