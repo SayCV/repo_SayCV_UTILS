@@ -82,9 +82,14 @@ echo SayCV_MXE: Add SayCV_MXE bin dir to PATH.
 set PATH=%PATH%;%SayCV_MXE_HOME%/usr/bin
 
 ::: ##############################
+::: Install geo: Geographical calculations in Go
+call :__subCall_Build_SAYCV_GO_GEO_INSTALL__
+cd %GOROOT%/src/pkg/github.com/kellydunn/golang-geo
+GO_ENV=test go test
+rem helpers
+::: ##############################
 ::: Install gocode and MarGo
-call :__subCall_Build_SAYCV_GO_IDE_INSTALL__
-
+rem call :__subCall_Build_SAYCV_GO_IDE_INSTALL__
 ::: ##############################
 ::: Example: So Simple, So Ugly
 rem call :__subCall_Build_SAYCV_GO_UIK_TEST__ uiktest
@@ -159,6 +164,11 @@ if %EOF_ENV_FLAG% EQU %EOF_ENV_CMD% (
   )
   goto :EOF
 
+:__subCall_Build_SAYCV_GO_GEO_INSTALL__
+	go get -u github.com/kellydunn/golang-geo
+	cd %GOROOT%/src/pkg/github.com/kellydunn/golang-geo/test
+	call :__subCall_Build_SAYCV_GO_COMMON_TEST__ %1
+
 :__subCall_Build_SAYCV_GO_IDE_INSTALL__
 	go get -u github.com/nsf/gocode
 	go get -u github.com/DisposaBoy/MarGo
@@ -170,19 +180,15 @@ if %EOF_ENV_FLAG% EQU %EOF_ENV_CMD% (
 	rem go get github.com/AllenDang/w32
 	rem go get github.com/skelterjohn/go.uik
 	cd %GOROOT%/src/pkg/github.com/skelterjohn/go.uik/examples
-	cd %1
-	if exist build.bat (
-		call build.bat
-	) else (
-		go build
-	)
-	echo Run Programes...
-	%1.exe
-  goto :__subCall_Status_Code__
+	call :__subCall_Build_SAYCV_GO_COMMON_TEST__ %1
 
 :__subCall_Build_SAYCV_GO_WALK_TEST__
 	rem go get github.com/lxn/walk
 	cd %GOROOT%/src/pkg/github.com/lxn/walk/examples
+	call :__subCall_Build_SAYCV_GO_COMMON_TEST__ %1
+	
+:__subCall_Build_SAYCV_GO_COMMON_TEST__
+	if "%1"=="" goto :__subCall_Status_Code__
 	cd %1
 	if exist build.bat (
 		call build.bat

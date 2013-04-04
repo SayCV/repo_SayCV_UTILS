@@ -110,7 +110,8 @@ if not exist stamp_build_priority_pkgs_update_checksum (
 
 echo SayCV_MXE: Start Make PKGS...
 rem bash --login -i  -c "make update-checksum-mercurial"
-bash --login -i -c "make make autoconf automake gettext libtool"
+bash --login -i -c "make wget"
+rem bash --login -i -c "make make autoconf automake gettext libtool"
 
 REM ##############################
 REM End ...
