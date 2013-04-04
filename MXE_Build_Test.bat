@@ -53,6 +53,8 @@ if %INSIDE_UTILS_ENV_FLAG% EQU %INSIDE_UTILS_ENV_MINGW% (
   )
 )
 SetLocal DisableDelayedExpansion
+echo SayCV_MXE: Add 7z bin dir to PATH.
+set PATH=%PATH%;D:\Program Files\7-Zip
 echo SayCV_MXE: Add git bin dir to PATH.
 set PATH=%PATH%;D:\Program Files (x86)\Git\bin
 set PATH=%PATH%;D:\Program Files\Git\bin
