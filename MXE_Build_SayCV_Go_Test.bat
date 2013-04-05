@@ -85,6 +85,10 @@ echo SayCV_MXE: Add SayCV_MXE bin dir to PATH.
 set PATH=%PATH%;%SayCV_MXE_HOME%/usr/bin
 
 ::: ##############################
+::: Install Go: An image conversion command line tool written in the Go language
+::: Install Go: Require a runtime or specific tools: ImageMagick
+call :__subCall_Build_SAYCV_GO_goconvert_INSTALL__
+::: ##############################
 ::: Install Go mandelbrot
 call :__subCall_Build_SAYCV_GO_mandelbrot_INSTALL__
 ::: ##############################
@@ -96,9 +100,6 @@ rem pmap
 ::: ##############################
 ::: Install geo: Geographical calculations in Go
 call :__subCall_Build_SAYCV_GO_GEO_INSTALL__
-cd %GOROOT%/src/pkg/github.com/kellydunn/golang-geo
-GO_ENV=test go test
-rem helpers
 ::: ##############################
 ::: Install gocode and MarGo
 rem call :__subCall_Build_SAYCV_GO_IDE_INSTALL__
@@ -176,9 +177,18 @@ if %EOF_ENV_FLAG% EQU %EOF_ENV_CMD% (
   )
   goto :EOF
 
+rem ./goconvert -f imagefolderpath -c mycollectionname
+:__subCall_Build_SAYCV_GO_goconvert_INSTALL__
+	go get code.google.com/p/exif4go
+	go get code.google.com/p/goconvert
+	cd %GOROOT%/src/pkg/code.google.com/p/goconvert
+	cd HOME=%cd%
+	goconvert -f test -c firsttest
+	goto :__subCall_Status_Code__
+
 :__subCall_Build_SAYCV_GO_mandelbrot_INSTALL__
-rem	go get github.com/Nightgunner5/mandelbrot
-rem	goto :__subCall_Status_Code__
+	go get github.com/Nightgunner5/mandelbrot
+	goto :__subCall_Status_Code__
 
 :__subCall_Build_SAYCV_GO_SVGO_INSTALL__
 	go get github.com/ajstarks/svgo
@@ -190,7 +200,11 @@ rem	goto :__subCall_Status_Code__
 
 :__subCall_Build_SAYCV_GO_GEO_INSTALL__
 	go get -u github.com/kellydunn/golang-geo
+	
 	cd %GOROOT%/src/pkg/github.com/kellydunn/golang-geo/test
+	cd %GOROOT%/src/pkg/github.com/kellydunn/golang-geo
+	GO_ENV=test go test
+	rem helpers
 	call :__subCall_Build_SAYCV_GO_COMMON_TEST__ %1
 
 :__subCall_Build_SAYCV_GO_IDE_INSTALL__
