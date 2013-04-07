@@ -15,7 +15,7 @@ rem set whether shutdown computer or not when call end with the batch.
 set /a END_WITH_SHUTDOWN_NO=0
 set /a END_WITH_SHUTDOWN_YES=1
 set /a END_WITH_SHUTDOWN_YES_TIME=2
-set /a END_WITH_SHUTDOWN_FLAG=1
+set /a END_WITH_SHUTDOWN_FLAG=0
 
 rem set other values to included both MinGW and Cygwin Env.
 set /a INSIDE_UTILS_ENV_MINGW=0
@@ -68,6 +68,10 @@ set HOME=%cd%
 REM ******************************
 REM Start ...
 REM ##############################
+echo SayCV_MXE: Set JAVA_HOME Env.
+set JAVA_HOME=D:\cygwin\opt\java\jdk1.6.0_20
+set JAVA_HOME=D:\cygwin\opt\java\jdk1.7.0_07
+
 cd SayCV_MXE
 set HOME=%cd%
 
