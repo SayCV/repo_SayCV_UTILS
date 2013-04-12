@@ -68,8 +68,9 @@ echo SayCV_MXE: Add Python bin dir to PATH.
 set PATH=D:\Python27;%PATH%
 rem echo %PATH%
 
-echo SayCV_MXE: Init HOME directory to here call batfile.
+echo SayCV_MXE: echo Init HOME directory to here call batfile.
 set HOME=%cd%
+set ORIGIN_HOME=%cd%
 
 REM ******************************
 REM Start ...
@@ -97,6 +98,12 @@ if not exist %JAVA_HOME% (
 echo SayCV_MXE: Add JAVA_HOME bin to PATH.
 set "PATH=%JAVA_HOME%/bin;%PATH%"
 
+echo SayCV_MXE: Set PKG_CONFIG_PATH to MXE Builds.
+set "SayCV_MXE_HOME=%HOME%/SayCV_MXE"
+set "PKG_CONFIG=i686-pc-mingw32-pkg-config"
+set "PKG_CONFIG_PATH=%HOME%/SayCV_MXE/usr/i686-pc-mingw32/lib/pkgconfig"
+set "PKG_CONFIG_PATH_i686_pc_mingw32=%HOME%/SayCV_MXE/usr/i686-pc-mingw32/lib/pkgconfig"
+
 cd SayCV_MXE
 set HOME=%cd%
 
@@ -123,7 +130,7 @@ if not exist stamp_getready_requirements_update_checksum (
 
 echo SayCV_MXE: Start Make PKGs...
 
-bash --login -i -c "make update-downloaded-checksum-qt"
+rem bash --login -i -c "make update-downloaded-checksum-qt"
 rem bash --login -i -c "make update-qt"
 call :__subCall_Build_PKGs__ qt
 rem go ant arduino SublimeText2 qt-creator
