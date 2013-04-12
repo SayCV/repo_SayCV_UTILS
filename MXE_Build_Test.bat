@@ -98,13 +98,15 @@ if not exist %JAVA_HOME% (
 echo SayCV_MXE: Add JAVA_HOME bin to PATH.
 set "PATH=%JAVA_HOME%/bin;%PATH%"
 
-echo SayCV_MXE: Add MXE Builds bin to PATH.
-
 echo SayCV_MXE: Set PKG_CONFIG_PATH to MXE Builds.
 set "SayCV_MXE_HOME=%HOME%/SayCV_MXE"
 set "PKG_CONFIG=i686-pc-mingw32-pkg-config"
 set "PKG_CONFIG_PATH=%HOME%/SayCV_MXE/usr/i686-pc-mingw32/lib/pkgconfig"
 set "PKG_CONFIG_PATH_i686_pc_mingw32=%HOME%/SayCV_MXE/usr/i686-pc-mingw32/lib/pkgconfig"
+
+
+echo SayCV_MXE: Ignore Add MXE Builds bin to PATH.
+rem set "PATH=%SayCV_MXE_HOME%/usr/bin;%PATH%"
 
 cd SayCV_MXE
 set HOME=%cd%
