@@ -123,7 +123,7 @@ if not exist stamp_getready_requirements_update_checksum (
 
 echo SayCV_MXE: Start Make PKGs...
 
-rem bash --login -i -c "make update-downloaded-checksum-qt-creator"
+bash --login -i -c "make update-downloaded-checksum-qt"
 rem bash --login -i -c "make update-qt"
 call :__subCall_Build_PKGs__ qt
 rem go ant arduino SublimeText2 qt-creator
