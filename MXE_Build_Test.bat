@@ -29,6 +29,12 @@ set /a EOF_ENV_BASH=1
 set /a EOF_ENV_EOF=3
 set /a EOF_ENV_FLAG=3
 
+rem set JAVA SDK values will be used
+set /a USED_JAVA_VER_1D6=0
+set /a USED_JAVA_VER_1D7=1
+set /a USED_JAVA_VER_NONE=3
+set /a USED_JAVA_VER_FLAG=0
+
 set INSTALL_ENV_DIR_MINGW=D:\MinGW
 set INSTALL_ENV_DIR_CYGWIN=D:\cygwin
 
@@ -62,15 +68,34 @@ echo SayCV_MXE: Add Python bin dir to PATH.
 set PATH=D:\Python27;%PATH%
 rem echo %PATH%
 
-echo SayCV_MXE: echo Init HOME directory to here call batfile.
+echo SayCV_MXE: Init HOME directory to here call batfile.
 set HOME=%cd%
 
 REM ******************************
 REM Start ...
 REM ##############################
 echo SayCV_MXE: Set JAVA_HOME Env.
-set JAVA_HOME=D:\cygwin\opt\java\jdk1.6.0_20
-set JAVA_HOME=D:\cygwin\opt\java\jdk1.7.0_07
+set JAVA_INSTALL_DIR=D:/cygwin/opt/Java
+if '%USED_JAVA_VER_FLAG%'=='%USED_JAVA_VER_1D6%' (
+	set "JAVA_HOME=%JAVA_INSTALL_DIR%/jdk6"
+	rem set  "JRE_HOME=%JAVA_INSTALL_DIR%/jre6
+	set  "CLASSPATH=%JAVA_HOME%/lib:%JRE_HOME%/lib
+	echo SayCV_MXE: Set JAVA_HOME Env to 1.6.
+) else (
+	if '%USED_JAVA_VER_FLAG%'=='%USED_JAVA_VER_1D7%' (
+		set "JAVA_HOME=%JAVA_INSTALL_DIR%/jdk7"
+		rem set  "JRE_HOME=%JAVA_INSTALL_DIR%/jre7
+		set  "CLASSPATH=%JAVA_HOME%/lib:%JRE_HOME%/lib
+		echo SayCV_MXE:Set JAVA_HOME Env to 1.7.
+	) else (
+		echo SayCV_MXE: Do NOT Needed Set JAVA_HOME Env.
+	)
+)
+if not exist %JAVA_HOME% (
+	echo SayCV_MXE: But directory of JAVA_HOME NOT Exist.
+)
+echo SayCV_MXE: Add JAVA_HOME bin to PATH.
+set "PATH=%JAVA_HOME%/bin;%PATH%"
 
 cd SayCV_MXE
 set HOME=%cd%
