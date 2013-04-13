@@ -118,7 +118,7 @@ bash --login -i -c "cp -f origin-msys-1.0.dll rebase-msys-1.0.dll"
 bash --login -i -c "rebase -b 0x64000000 rebase-msys-1.0.dll"
 echo SayCV_MXE: Set Cygwin ENV to Replace MinGW DLL.
 set "PATH=%INSTALL_ENV_DIR_CYGWIN%/bin;%PATH%"
-bash --login -i -c "cp -f rebase-msys-1.0.dll /bin/msys-1.0.dll"
+bash --login -i -c "cp -f rebase-msys-1.0.dll /cygdrive/d/MinGW/msys/1.0/bin/msys-1.0.dll"
 rem bash --login -i- c "rebase -b 0x30000000 /bin/msys-1.0.dll"
 rem bash --login -i- c "rebase -b 0x70000000 /bin/msys-1.0.dll"
 
