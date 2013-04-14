@@ -29,24 +29,24 @@ set /a EOF_ENV_BASH=1
 set /a EOF_ENV_EOF=3
 set /a EOF_ENV_FLAG=3
 
-set INSTALL_ENV_DIR_MINGW=D:\MinGW
-set INSTALL_ENV_DIR_CYGWIN=D:\cygwin
+set INSTALL_ENV_DIR_MINGW=D:/MinGW
+set INSTALL_ENV_DIR_CYGWIN=D:/cygwin
 
 SetLocal EnableDelayedExpansion
 if %INSIDE_UTILS_ENV_FLAG% EQU %INSIDE_UTILS_ENV_MINGW% (
     echo Init Included MinGW env.
-    set "PATH=%INSTALL_ENV_DIR_MINGW%\bin;!PATH!"
-    set "PATH=%INSTALL_ENV_DIR_MINGW%\msys\1.0\bin;%INSTALL_ENV_DIR_MINGW%\msys\1.0\local\bin;!PATH!"
+    set "PATH=%INSTALL_ENV_DIR_MINGW%/bin;!PATH!"
+    set "PATH=%INSTALL_ENV_DIR_MINGW%/msys/1.0/bin;%INSTALL_ENV_DIR_MINGW%/msys/1.0/local/bin;!PATH!"
 ) else (
   if %INSIDE_UTILS_ENV_FLAG% EQU %INSIDE_UTILS_ENV_CYGWIN% (
     echo Init Included Cygwin env.
-    set "PATH=%INSTALL_ENV_DIR_CYGWIN%\bin;!PATH!"
+    set "PATH=%INSTALL_ENV_DIR_CYGWIN%/bin;!PATH!"
   ) else (
     if %INSIDE_UTILS_ENV_FLAG% EQU %INSIDE_UTILS_ENV_BOTHALL% (
       echo Init Included MinGW and Cygwin env.
-      set "PATH=%INSTALL_ENV_DIR_CYGWIN%\bin;!PATH!"
-      set "PATH=%INSTALL_ENV_DIR_MINGW%\bin;!PATH!"
-      set "PATH=%INSTALL_ENV_DIR_MINGW%\msys\1.0\bin;%INSTALL_ENV_DIR_MINGW%\msys\1.0\local\bin;!PATH!"
+      set "PATH=%INSTALL_ENV_DIR_CYGWIN%/bin;!PATH!"
+      set "PATH=%INSTALL_ENV_DIR_MINGW%/bin;!PATH!"
+      set "PATH=%INSTALL_ENV_DIR_MINGW%/msys/1.0/bin;%INSTALL_ENV_DIR_MINGW%/msys/1.0/local/bin;!PATH!"
     ) else (
       echo Init Excluded MinGW and Cygwin env.
     )
@@ -54,28 +54,30 @@ if %INSIDE_UTILS_ENV_FLAG% EQU %INSIDE_UTILS_ENV_MINGW% (
 )
 SetLocal DisableDelayedExpansion
 echo SayCV_MXE: Add git bin dir to PATH.
-set PATH=%PATH%;D:\Program Files (x86)\Git\bin
+set PATH=%PATH%;D:/Program Files (x86)/Git/bin
 echo SayCV_MXE: Add Python bin dir to PATH.
-set PATH=D:\Python27;%PATH%
-rem echo %PATH%
+set PATH=D:/Python27;%PATH%
+echo %PATH%
 
-echo SayCV_MXE: echo Init HOME directory to here call batfile.
+echo SayCV_MXE: Init HOME directory to here call batfile.
 set HOME=%cd%
 
 REM ******************************
 REM Start ...
 REM ##############################
-cd SayCV_MXE
-set HOME=%cd%
 
 rem END_WITH_SHUTDOWN_NO=0
 rem END_WITH_SHUTDOWN_YES=1
 rem END_WITH_SHUTDOWN_YES_TIME=2
 set /a END_WITH_SHUTDOWN_FLAG=0
 
-cd %HOME%/SayCV_MXE/tmp/agg/agg-2.5
-diff -ur configure.in.bak configure.in > %HOME%/SayCV_MXE/src/agg-2-fix-mingw-on-windows.patch
+echo SayCV_MXE: Ready To Copy Files For Diff.
+mkdir "tmp_src_diff"
+set DIFF_SRC_DIR=%HOME%/tmp_src_diff
 
+echo SayCV_MXE: Start Diff.
+call :__subCall_Build_DIFF_PKGs_qt__
+rem call :__subCall_Build_DIFF_PKGs_agg__
 
 REM ##############################
 REM End ...
@@ -138,3 +140,25 @@ if %EOF_ENV_FLAG% EQU %EOF_ENV_CMD% (
     )
   )
   goto :EOF
+
+:__subCall_Build_DIFF_PKGs_agg__
+	cd %HOME%/SayCV_MXE/tmp/agg/agg-2.5
+	diff -ur configure.in.bak configure.in > %HOME%/SayCV_MXE/src/agg-2-fix-mingw-on-windows.patch
+  goto :__subCall_Status_Code__
+
+:__subCall_Build_DIFF_PKGs_qt__
+	rem cd %HOME%/SayCV_MXE/tmp/qt/qt-everywhere-opensource-src-4.8.4/src/3rdparty/webkit/Source
+	rem diff -ur WebKit.pro.bak WebKit.pro > %HOME%/SayCV_MXE/src/qt-webkit-qt-tests-SayCV-fix-mingw-on-windows.patch
+	mkdir "%DIFF_SRC_DIR%/qt"
+	mkdir "%DIFF_SRC_DIR%/qt/a"
+	mkdir "%DIFF_SRC_DIR%/qt/b"
+	cd %HOME%/SayCV_MXE/tmp/qt/qt-everywhere-opensource-src-4.8.4
+	cp -rv --parents src/3rdparty/webkit/Source/WebKit.pro.bak -t %DIFF_SRC_DIR%/qt/a
+	cp -rv --parents src/3rdparty/webkit/Source/WebKit.pro     -t %DIFF_SRC_DIR%/qt/b
+	cd %DIFF_SRC_DIR%/qt/a/src/3rdparty/webkit/Source
+	mv WebKit.pro.bak WebKit.pro
+	
+	cd %DIFF_SRC_DIR%/qt
+	diff -urN a b > %HOME%/SayCV_MXE/src/qt-SayCV-fix-mingw-on-windows.patch
+	
+  goto :__subCall_Status_Code__
