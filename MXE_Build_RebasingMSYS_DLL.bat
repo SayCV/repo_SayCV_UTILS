@@ -108,37 +108,21 @@ set "PKG_CONFIG_PATH_i686_pc_mingw32=%HOME%/SayCV_MXE/usr/i686-pc-mingw32/lib/pk
 echo SayCV_MXE: Ignore Add MXE Builds bin to PATH.
 rem set "PATH=%SayCV_MXE_HOME%/usr/bin;%PATH%"
 
-cd SayCV_MXE
-set HOME=%cd%
+echo SayCV_MXE: D:\MinGW\msys\1.0\bin\make.exe: 
+echo SayCV_MXE: *** couldn't commit memory for cygwin heap, Win32 error 0
+echo SayCV_MXE: Please try rebasing the DLL.
+echo SayCV_MXE: You'll need to copy it to a temporary location, rebase the copy, 
+echo SayCV_MXE: exit all MSYS processes and copy the rebased DLL to the bin directory.
+bash --login -i -c "cp /bin/msys-1.0.dll origin-msys-1.0.dll"
+bash --login -i -c "cp -f origin-msys-1.0.dll rebase-msys-1.0.dll"
+bash --login -i -c "rebase -b 0x30000000 rebase-msys-1.0.dll"
+echo SayCV_MXE: Set Cygwin ENV to Replace MinGW DLL.
+set "PATH=%INSTALL_ENV_DIR_CYGWIN%/bin;%PATH%"
+bash --login -i -c "cp -f rebase-msys-1.0.dll /cygdrive/d/MinGW/msys/1.0/bin/msys-1.0.dll"
 
-set MINGW_PKG_DIR=%INSTALL_ENV_DIR_MINGW%\var\cache\mingw-get\packages
-if not exist stamp_call_mingw_get (
-  mingw-get install msys-libtool msys-wget
-  touch stamp_call_mingw_get
-)
-
-if "1" == "1" (
-  echo SayCV_MXE: Hacked to Ignore check-requirements.
-  bash --login -i -c "mkdir -p usr/installed"
-  cd usr/installed && touch check-requirements
-  cd ../../
-)
-
-if not exist stamp_getready_requirements_update_checksum (
-  if "1" == "0" (
-    call MXE_GetReady_Requirements.bat
-  ) else (
-    call MXE_GetReady_Requirements.bat
-  )
-)
-
-echo SayCV_MXE: Start Make PKGs...
-
-rem bash --login -i -c "make update-downloaded-checksum-qt"
-rem bash --login -i -c "make update-qt"
-call :__subCall_Build_PKGs__ qt-creator
-rem go ant arduino SublimeText2 qt-creator
-rem Build error: qt, See http://qt-project.org/search/tag/mingw
+rem bash --login -i -c "rebase -b 0x64000000 rebase-msys-1.0.dll"
+rem bash --login -i- c "rebase -b 0x30000000 /bin/msys-1.0.dll"
+rem bash --login -i- c "rebase -b 0x70000000 /bin/msys-1.0.dll"
 
 REM ##############################
 REM End ...
