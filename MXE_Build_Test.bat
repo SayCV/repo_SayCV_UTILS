@@ -136,7 +136,7 @@ echo SayCV_MXE: Start Make PKGs...
 
 rem bash --login -i -c "make update-downloaded-checksum-qt"
 rem bash --login -i -c "make update-qt"
-call :__subCall_Build_PKGs__ qt-creator
+call :__subCall_Build_PKGs__ qt
 rem go ant arduino SublimeText2 qt-creator
 rem Build error: qt, See http://qt-project.org/search/tag/mingw
 
