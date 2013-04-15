@@ -123,9 +123,9 @@ if not exist stamp_getready_requirements_update_checksum (
 
 echo SayCV_MXE: Start Make PKGs...
 
-bash --login -i -c "make update-downloaded-checksum-qt"
+rem bash --login -i -c "make update-downloaded-checksum-qt"
 rem bash --login -i -c "make update-qt"
-call :__subCall_Build_PKGs__ qt
+call :__subCall_Build_PKGs__ qt-creator
 rem go ant arduino SublimeText2 qt-creator
 rem Build error: qt, See http://qt-project.org/search/tag/mingw
 
