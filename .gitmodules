@@ -10,3 +10,6 @@
 [submodule "SayCV_Go"]
 	path = SayCV_Go
 	url = https://SayCV@github.com/SayCV/SayCV_Go.git
+[submodule "SayCV_SmartHosts"]
+	path = SayCV_SmartHosts
+	url = https://SayCV@github.com/SayCV/smarthosts.git
