@@ -196,7 +196,7 @@ git config --global --add http.sslVerify false
 git config --global --add https.sslVerify false
 :::#非常重要，否则可能提交不成功。
 git config --global --add http.postBuffer 524288000
-
+git config --global --add https.postBuffer 524288000
 
 REM ##############################
 REM End ...
