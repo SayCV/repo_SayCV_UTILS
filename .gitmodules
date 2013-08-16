@@ -13,3 +13,9 @@
 [submodule "SayCV_SmartHosts"]
 	path = SayCV_SmartHosts
 	url = https://SayCV@github.com/SayCV/smarthosts.git
+[submodule "SayCV_Tools_SourceInsight"]
+	path = SayCV_Tools_SourceInsight
+	url = https://SayCV@github.com/SayCV/SayCV_Tools_SourceInsight.git
+[submodule "SayCV_Tools_UltraEdit"]
+	path = SayCV_Tools_UltraEdit
+	url = https://SayCV@github.com/SayCV/SayCV_Tools_UltraEdit.git
