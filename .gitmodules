@@ -19,3 +19,6 @@
 [submodule "SayCV_Tools_UltraEdit"]
 	path = SayCV_Tools_UltraEdit
 	url = https://SayCV@github.com/SayCV/SayCV_Tools_UltraEdit.git
+[submodule "SayCV_Tools_AndroidStudio"]
+	path = SayCV_Tools_AndroidStudio
+	url = https://SayCV@github.com/SayCV/SayCV_Tools_AndroidStudio.git
