@@ -21,7 +21,7 @@ rem set other values to included both MinGW and Cygwin Env.
 set /a INSIDE_UTILS_ENV_MINGW=0
 set /a INSIDE_UTILS_ENV_CYGWIN=1
 set /a INSIDE_UTILS_ENV_BOTHALL=2
-set /a INSIDE_UTILS_ENV_FLAG=1
+set /a INSIDE_UTILS_ENV_FLAG=0
 
 set /a INSIDE_UTILS_ENV_JAVA=1
 set /a INSIDE_UTILS_ENV_VISUAL_STUDIO=0
@@ -199,6 +199,7 @@ setlocal enabledelayedexpansion
 
 	echo SayCV_MXE: Add Google Go TOOLs to PATH.
 	set "PATH=!GOROOT!/bin;!PATH!"
+	set "GOPATH=!HOME!/SayCV_Go"
 	set "PATH=!GOROOT!/pkg/tool/windows_386;!PATH!"
 setlocal disabledelayedexpansion
 )
@@ -207,9 +208,10 @@ REM ******************************
 REM Start ...
 REM ##############################
 
-if "1"=="0" (
-	cd %HOME%/SayCV_Go/SayCV_Go_VT
-	go build
+if "1"=="1" (
+	cd %HOME%/SayCV_Go/SayCV_Go_VT/termios
+	rem cgo termios.go
+	go build termios.go
 ) else (
 	go get github.com/SayCV/SayCV_Go_VT
 )
