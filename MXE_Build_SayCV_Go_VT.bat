@@ -208,12 +208,14 @@ REM ******************************
 REM Start ...
 REM ##############################
 
-if "1"=="1" (
+if "1"=="0" (
 	cd %HOME%/SayCV_Go/SayCV_Go_VT/termios
 	rem cgo termios.go
 	go build termios.go
 ) else (
-	go get github.com/SayCV/SayCV_Go_VT
+	rem go get github.com/SayCV/SayCV_Go_VT
+	go get github.com/shavac/goterm
+	go test github.com/shavac/goterm
 )
 
 

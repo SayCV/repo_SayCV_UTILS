@@ -23,30 +23,49 @@ set /a INSIDE_UTILS_ENV_CYGWIN=1
 set /a INSIDE_UTILS_ENV_BOTHALL=2
 set /a INSIDE_UTILS_ENV_FLAG=0
 
+set /a INSIDE_UTILS_ENV_JAVA=1
+set /a INSIDE_UTILS_ENV_VISUAL_STUDIO=0
+set /a INSIDE_UTILS_ENV_QT=0
+
+set /a INSIDE_UTILS_ENV_SAYCV_MXE=0
+set /a INSIDE_UTILS_ENV_RTEMS=1
+set /a INSIDE_UTILS_ENV_APACHE_ANT=1
+set /a INSIDE_UTILS_ENV_GOOGLE_GO=1
+
+set /a SETTINGS_HTTP_PROXY=0
+
 rem set other values to do some user cmds
 set /a EOF_ENV_CMD=0
 set /a EOF_ENV_BASH=1
 set /a EOF_ENV_EOF=3
 set /a EOF_ENV_FLAG=3
 
-set INSTALL_ENV_DIR_MINGW=D:\MinGW
-set INSTALL_ENV_DIR_CYGWIN=D:\cygwin
+rem set JAVA SDK values will be used
+set /a USED_JAVA_VER_1D6=0
+set /a USED_JAVA_VER_1D7=1
+set /a USED_JAVA_VER_NONE=3
+set /a USED_JAVA_VER_FLAG=1
+
+set INSTALL_ENV_DIR_MINGW=D:/MinGW
+set INSTALL_ENV_DIR_CYGWIN=D:/cygwin
+
+set ORIGIN_PATH=%PATH%
 
 SetLocal EnableDelayedExpansion
 if %INSIDE_UTILS_ENV_FLAG% EQU %INSIDE_UTILS_ENV_MINGW% (
     echo Init Included MinGW env.
-    set "PATH=%INSTALL_ENV_DIR_MINGW%\bin;!PATH!"
-    set "PATH=%INSTALL_ENV_DIR_MINGW%\msys\1.0\bin;%INSTALL_ENV_DIR_MINGW%\msys\1.0\local\bin;!PATH!"
+    set "PATH=%INSTALL_ENV_DIR_MINGW%/bin;!PATH!"
+    set "PATH=%INSTALL_ENV_DIR_MINGW%/msys/1.0/bin;%INSTALL_ENV_DIR_MINGW%/msys/1.0/local/bin;!PATH!"
 ) else (
   if %INSIDE_UTILS_ENV_FLAG% EQU %INSIDE_UTILS_ENV_CYGWIN% (
     echo Init Included Cygwin env.
-    set "PATH=%INSTALL_ENV_DIR_CYGWIN%\bin;!PATH!"
+    set "PATH=%INSTALL_ENV_DIR_CYGWIN%/bin;!PATH!"
   ) else (
     if %INSIDE_UTILS_ENV_FLAG% EQU %INSIDE_UTILS_ENV_BOTHALL% (
       echo Init Included MinGW and Cygwin env.
-      set "PATH=%INSTALL_ENV_DIR_CYGWIN%\bin;!PATH!"
-      set "PATH=%INSTALL_ENV_DIR_MINGW%\bin;!PATH!"
-      set "PATH=%INSTALL_ENV_DIR_MINGW%\msys\1.0\bin;%INSTALL_ENV_DIR_MINGW%\msys\1.0\local\bin;!PATH!"
+      set "PATH=%INSTALL_ENV_DIR_CYGWIN%/bin;!PATH!"
+      set "PATH=%INSTALL_ENV_DIR_MINGW%/bin;!PATH!"
+      set "PATH=%INSTALL_ENV_DIR_MINGW%/msys/1.0/bin;%INSTALL_ENV_DIR_MINGW%/msys/1.0/local/bin;!PATH!"
     ) else (
       echo Init Excluded MinGW and Cygwin env.
     )
@@ -54,33 +73,140 @@ if %INSIDE_UTILS_ENV_FLAG% EQU %INSIDE_UTILS_ENV_MINGW% (
 )
 SetLocal DisableDelayedExpansion
 echo SayCV_MXE: Add git bin dir to PATH.
-set PATH=%PATH%;D:\Program Files (x86)\Git\bin
-set PATH=%PATH%;D:\Program Files\Git\bin
+set PATH=%PATH%;D:/Program Files (x86)/Git/bin
+set PATH=%PATH%;D:/Program Files/Git/bin
 echo SayCV_MXE: Add Python bin dir to PATH.
-set PATH=D:\Python27;%PATH%
+set PATH=D:/Python27;%PATH%
 rem echo %PATH%
 
-echo SayCV_MXE: echo Init HOME directory to here call batfile.
+echo SayCV_MXE: Init HOME directory to here call batfile.
 set HOME=%cd%
+set ORIGIN_HOME=%cd%
+
+if '%INSIDE_UTILS_ENV_JAVA%' == '1' (
+SetLocal EnableDelayedExpansion
+echo SayCV_MXE: Set JAVA_HOME Env.
+set JAVA_INSTALL_DIR=D:/cygwin/opt/Java
+if '%USED_JAVA_VER_FLAG%'=='%USED_JAVA_VER_1D6%' (
+	set "JAVA_HOME=!JAVA_INSTALL_DIR!/jdk6"
+	rem set  "JRE_HOME=!JAVA_INSTALL_DIR!/jre6
+	set  "CLASSPATH=!JAVA_HOME!/lib:!JRE_HOME!/lib
+	echo SayCV_MXE: Set JAVA_HOME Env to 1.6.
+) else (
+	if '%USED_JAVA_VER_FLAG%'=='%USED_JAVA_VER_1D7%' (
+		set "JAVA_HOME=!JAVA_INSTALL_DIR!/jdk7"
+		rem set  "JRE_HOME=!JAVA_INSTALL_DIR!/jre7
+		set  "CLASSPATH=!JAVA_HOME!/lib:!JRE_HOME!/lib
+		echo SayCV_MXE: Set JAVA_HOME Env to 1.7.
+	) else (
+		echo SayCV_MXE: Do NOT Needed Set JAVA_HOME Env.
+	)
+)
+if not exist "!JAVA_HOME!" (
+	echo SayCV_MXE: But directory of JAVA_HOME NOT Exist.
+)
+SetLocal DisableDelayedExpansion
+)
+
+if '%INSIDE_UTILS_ENV_QT%'=='1' (
+SetLocal EnableDelayedExpansion
+echo SayCV_MXE: Add QT bin dir to PATH.
+set QMAKESPEC=win32-g++
+set "QT_SDK_DIR=D:/MinGW/opt/Qt/4.8.4"
+set "QT_SDK_DIR=D:/work_coding/bitbucket-SayCV-Hosting/repo_SayCV_UTILS/SayCV_MXE/tmp/qt/qt-everywhere-opensource-src-4.8.4"
+set QT64_502_ROOT=!SayCV_MXE_HOME!/usr/opt/Qt64-5.0.2
+set Qt32_484_ROOT=!SayCV_MXE_HOME!/usr/opt/Qt32-4.8.4
+if '1'=='0' (
+	set "PATH=!QT64_502_ROOT!/bin;!PATH!"
+	set "PATH=!QT64_502_ROOT!/pre_bin;!PATH!"
+	set "QTDIR=!QT64_502_ROOT!"
+) else (
+	if '1'=='0' (
+		set "PATH=!Qt32_484_ROOT!/bin;!PATH!"
+		set "PATH=!Qt32_484_ROOT!/ported32/bin;!PATH!"
+		set "QTDIR=!Qt32_484_ROOT!"
+	) else (
+		set "PATH=!QT_SDK_DIR!/bin;!PATH!"
+		set "QTDIR=!QT_SDK_DIR!"
+	)
+)
+SetLocal DisableDelayedExpansion
+)
+
+if '%INSIDE_UTILS_ENV_VISUAL_STUDIO%'=='1' (
+setlocal enabledelayedexpansion
+echo SayCV_MXE: Set VCPath and SDKPath.
+set      "VCROOT=D:/Program Files (x86)/Microsoft Visual Studio 11.0"
+set "VC_IDE_PATH=!VCROOT!/Common7/IDE"
+set      "VCPath=!VCROOT!/VC"
+set     "SDKPath=D:/Program Files (x86)/Microsoft SDKs/Windows/v7.1"
+
+echo SayCV_MXE: Add Microsoft Visual Studio IDE dir to PATH.
+set "PATH=!PATH!;!VC_IDE_PATH!"
+
+echo SayCV_MXE: Call vcvars32.bat.
+call "!VCPath!/bin/vcvars32.bat"
+setlocal disabledelayedexpansion
+)
+
+if '%INSIDE_UTILS_ENV_RTEMS%'=='1' (
+setlocal enabledelayedexpansion
+echo SayCV_MXE: Config RTEMS TOOLs and BSP SDK.
+set      "RTEMSROOT=D:/cygwin/opt"
+set "RTEMS_TOOLS_PATH=!RTEMSROOT!/rtems-4.11-tools-VO1/bin;!RTEMSROOT!/rtems-4.11-tools/bin"
+
+set			"RTEMS_BSPSDK_PATH=!RTEMSROOT!/rtems-4.11/arm-rtemseabi4.11"
+set     "MKIMAGE=%HOME%/barebox-at91/scripts/mkimage.exe"
+
+echo SayCV_MXE: Add RTEMS TOOLs to PATH.
+set "PATH=!PATH!;!RTEMS_TOOLS_PATH!"
+
+setlocal disabledelayedexpansion
+)
+
+if %SETTINGS_HTTP_PROXY% ==1 (
+	echo SayCV_MXE: Setting http_proxy on.
+	set http_proxy=http://127.0.0.1:8087/
+	set https_proxy=http://127.0.0.1:8087/
+)
+
+set SayCV_MXE_HOME=%ORIGIN_HOME%/../repo_SayCV_UTILS/SayCV_MXE
+set SayCV_MXE_TARGET_PATH=%ORIGIN_HOME%/../work_root/target
+
+if '%INSIDE_UTILS_ENV_SAYCV_MXE%'=='1' (
+setlocal enabledelayedexpansion
+	echo SayCV_MXE: Add SAYCV_MXE TOOLs to PATH.
+	set "PATH=!SayCV_MXE_HOME!/bin;!PATH!"
+	set "CROSS_COMPILE=i686-pc-mingw32-"
+setlocal disabledelayedexpansion
+)
+
+if '%INSIDE_UTILS_ENV_APACHE_ANT%'=='1' (
+setlocal enabledelayedexpansion
+	echo SayCV_MXE: Add Apache ant TOOLs to PATH.
+	set      "APACHE_ANT_ROOT=!SayCV_MXE_HOME!/usr/opt/ant"
+
+	set "PATH=!PATH!;!APACHE_ANT_ROOT!/bin"
+setlocal disabledelayedexpansion
+)
+
+if '%INSIDE_UTILS_ENV_GOOGLE_GO%'=='1' (
+setlocal enabledelayedexpansion
+	echo SayCV_MXE: Config Google Go TOOLs.
+	set "GOOS=windows"
+	set "GOARCH=386"
+	set "GOROOT=!SayCV_MXE_HOME!/usr/opt/go"
+
+	echo SayCV_MXE: Add Google Go TOOLs to PATH.
+	set "PATH=!GOROOT!/bin;!PATH!"
+	set "GOPATH=!HOME!/SayCV_Go"
+	set "PATH=!GOROOT!/pkg/tool/windows_386;!PATH!"
+setlocal disabledelayedexpansion
+)
 
 REM ******************************
 REM Start ...
 REM ##############################
-
-echo SayCV_MXE: Set JAVA_HOME Env.
-set JAVA_HOME=D:\cygwin\opt\java\jdk1.6.0_20
-set JAVA_HOME=D:\cygwin\opt\java\jdk1.7.0_07
-
-set HOME_TMP=%cd%
-set SayCV_MXE_HOME=%HOME_TMP%/SayCV_MXE
-echo SayCV_MXE: Add Apache ant bin dir to PATH.
-set PATH=%SayCV_MXE_HOME%/usr/opt/ant/bin;%PATH%;
-
-echo SayCV_MXE: Add Google Go bin dir to PATH.
-set GOOS=windows
-set GOARCH=386
-set GOROOT=%SayCV_MXE_HOME%/usr/opt/go
-set PATH=%GOROOT%/bin;%PATH%
 
 echo Goplay is a web interface for experimenting with Go code.
 echo It is similar to the Go Playground: http://golang.org/doc/play/
@@ -138,6 +264,7 @@ if %EOF_ENV_FLAG% EQU %EOF_ENV_CMD% (
 :__subCall_EOF__
   call :__subCall_ShutDown_EOF__
 :EOF
+	cd %ORIGIN_HOME%
   PAUSE
   EXIT
 
@@ -158,3 +285,4 @@ if %EOF_ENV_FLAG% EQU %EOF_ENV_CMD% (
     )
   )
   goto :EOF
+
