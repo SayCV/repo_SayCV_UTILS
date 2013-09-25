@@ -21,7 +21,7 @@ rem set other values to included both MinGW and Cygwin Env.
 set /a INSIDE_UTILS_ENV_MINGW=0
 set /a INSIDE_UTILS_ENV_CYGWIN=1
 set /a INSIDE_UTILS_ENV_BOTHALL=2
-set /a INSIDE_UTILS_ENV_FLAG=0
+set /a INSIDE_UTILS_ENV_FLAG=1
 
 set /a INSIDE_UTILS_ENV_JAVA=1
 set /a INSIDE_UTILS_ENV_VISUAL_STUDIO=0
@@ -51,6 +51,7 @@ set INSTALL_ENV_DIR_CYGWIN=D:/cygwin
 
 set ORIGIN_PATH=%PATH%
 
+rem goto :label_user_start_
 SetLocal EnableDelayedExpansion
 if %INSIDE_UTILS_ENV_FLAG% EQU %INSIDE_UTILS_ENV_MINGW% (
     echo Init Included MinGW env.
@@ -170,8 +171,14 @@ if %SETTINGS_HTTP_PROXY% ==1 (
 	set https_proxy=http://127.0.0.1:8087/
 )
 
+echo SayCV_MXE: Setting SayCV_MXE_HOME and SayCV_MXE_TARGET_PATH.
 set SayCV_MXE_HOME=%ORIGIN_HOME%/../repo_SayCV_UTILS/SayCV_MXE
 set SayCV_MXE_TARGET_PATH=%ORIGIN_HOME%/../work_root/target
+echo SayCV_MXE: Setting SayCV_MXE_HOME_ABS and SayCV_MXE_TARGET_PATH_ABS.
+cd ..
+set SayCV_MXE_HOME_ABS=%cd%/repo_SayCV_UTILS/SayCV_MXE
+set SayCV_MXE_TARGET_PATH_ABS=%cd%/work_root/target
+cd %ORIGIN_HOME%
 
 if '%INSIDE_UTILS_ENV_SAYCV_MXE%'=='1' (
 setlocal enabledelayedexpansion
@@ -190,12 +197,14 @@ setlocal enabledelayedexpansion
 setlocal disabledelayedexpansion
 )
 
+:label_user_start_
 if '%INSIDE_UTILS_ENV_GOOGLE_GO%'=='1' (
 setlocal enabledelayedexpansion
 	echo SayCV_MXE: Config Google Go TOOLs.
-	set "GOOS=windows"
-	set "GOARCH=386"
-	set "GOROOT=!SayCV_MXE_HOME!/usr/opt/go"
+	rem set "GOOS=windows"
+	rem set "GOARCH=386"
+	rem Because of PATH NOT Include such as ..
+	set "GOROOT=!SayCV_MXE_HOME_ABS!/usr/opt/go"
 
 	echo SayCV_MXE: Add Google Go TOOLs to PATH.
 	set "PATH=!GOROOT!/bin;!PATH!"
@@ -214,8 +223,9 @@ if "1"=="0" (
 	go build termios.go
 ) else (
 	rem go get github.com/SayCV/SayCV_Go_VT
-	go get github.com/shavac/goterm
-	go test github.com/shavac/goterm
+	go build github.com/user/newmath
+	go install github.com/user/hello
+	%HOME%/SayCV_Go/bin/hello.exe
 )
 
 
