@@ -217,15 +217,22 @@ REM ******************************
 REM Start ...
 REM ##############################
 
-if "1"=="0" (
-	cd %HOME%/SayCV_Go/SayCV_Go_VT/termios
-	rem cgo termios.go
-	go build termios.go
-) else (
-	rem go get github.com/SayCV/SayCV_Go_VT
+set /a BUILD_EXAMPLE_DEMO_HELLO_PKG=0
+set /a BUILD_EXAMPLE_DOTA2S=1
+
+set /a BUILD_EXAMPLE_SELECTOR=1
+
+if '%BUILD_EXAMPLE_SELECTOR%'=='%BUILD_EXAMPLE_DEMO_HELLO_PKG%' (
 	go build github.com/user/newmath
 	go install github.com/user/hello
 	%HOME%/SayCV_Go/bin/hello.exe
+) else (
+if '%BUILD_EXAMPLE_SELECTOR%'=='%BUILD_EXAMPLE_DOTA2S%' (
+	go install github.com/SayCV/SayCV_Go_Dota2S
+	%HOME%/SayCV_Go/bin/SayCV_Go_Dota2S.exe
+) else (
+	echo DO NOTHING.
+)
 )
 
 

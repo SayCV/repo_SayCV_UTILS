@@ -170,8 +170,14 @@ if %SETTINGS_HTTP_PROXY% ==1 (
 	set https_proxy=http://127.0.0.1:8087/
 )
 
+echo SayCV_MXE: Setting SayCV_MXE_HOME and SayCV_MXE_TARGET_PATH.
 set SayCV_MXE_HOME=%ORIGIN_HOME%/../repo_SayCV_UTILS/SayCV_MXE
 set SayCV_MXE_TARGET_PATH=%ORIGIN_HOME%/../work_root/target
+echo SayCV_MXE: Setting SayCV_MXE_HOME_ABS and SayCV_MXE_TARGET_PATH_ABS.
+cd ..
+set SayCV_MXE_HOME_ABS=%cd%/repo_SayCV_UTILS/SayCV_MXE
+set SayCV_MXE_TARGET_PATH_ABS=%cd%/work_root/target
+cd %ORIGIN_HOME%
 
 if '%INSIDE_UTILS_ENV_SAYCV_MXE%'=='1' (
 setlocal enabledelayedexpansion
@@ -195,7 +201,7 @@ setlocal enabledelayedexpansion
 	echo SayCV_MXE: Config Google Go TOOLs.
 	set "GOOS=windows"
 	set "GOARCH=386"
-	set "GOROOT=!SayCV_MXE_HOME!/usr/opt/go"
+	set "GOROOT=!SayCV_MXE_HOME_ABS!/usr/opt/go"
 
 	echo SayCV_MXE: Add Google Go TOOLs to PATH.
 	set "PATH=!GOROOT!/bin;!PATH!"
