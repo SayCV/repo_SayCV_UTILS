@@ -218,20 +218,35 @@ REM Start ...
 REM ##############################
 
 set /a BUILD_EXAMPLE_DEMO_HELLO_PKG=0
-set /a BUILD_EXAMPLE_DOTA2S=1
+set /a BUILD_EXAMPLE_VT=1
+set /a BUILD_EXAMPLE_DOTA2S=2
 
-set /a BUILD_EXAMPLE_SELECTOR=1
+set /a BUILD_EXAMPLE_SELECTOR=%BUILD_EXAMPLE_VT%
 
 if '%BUILD_EXAMPLE_SELECTOR%'=='%BUILD_EXAMPLE_DEMO_HELLO_PKG%' (
 	go build github.com/user/newmath
 	go install github.com/user/hello
 	%HOME%/SayCV_Go/bin/hello.exe
 ) else (
+if '%BUILD_EXAMPLE_SELECTOR%'=='%BUILD_EXAMPLE_VT%' (
+	rm -rf %HOME%/SayCV_Go/bin/sayTerm.exe
+	go get github.com/tarm/goserial
+	go get github.com/SayCV/SayCV_Go_VT
+	go install github.com/SayCV/SayCV_Go_VT
+	cd %HOME%/SayCV_Go/bin
+	mv SayCV_Go_VT.exe sayTerm.exe
+	cp -rf %HOME%/SayCV_Go/dft.exe.manifest %HOME%/SayCV_Go/bin/sayTerm.exe.manifest
+	sayTerm.exe
+) else (
 if '%BUILD_EXAMPLE_SELECTOR%'=='%BUILD_EXAMPLE_DOTA2S%' (
+	rm -rf %HOME%/SayCV_Go/bin/SayCV_Go_Dota2S.exe
+	go get github.com/tarm/goserial
 	go install github.com/SayCV/SayCV_Go_Dota2S
-	%HOME%/SayCV_Go/bin/SayCV_Go_Dota2S.exe
+	cd %HOME%/SayCV_Go/bin
+	SayCV_Go_Dota2S.exe
 ) else (
 	echo DO NOTHING.
+)
 )
 )
 
