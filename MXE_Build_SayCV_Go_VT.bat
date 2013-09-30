@@ -229,7 +229,12 @@ if '%BUILD_EXAMPLE_SELECTOR%'=='%BUILD_EXAMPLE_DEMO_HELLO_PKG%' (
 	%HOME%/SayCV_Go/bin/hello.exe
 ) else (
 if '%BUILD_EXAMPLE_SELECTOR%'=='%BUILD_EXAMPLE_VT%' (
+	cd %HOME%/SayCV_Go/src/github.com/SayCV/SayCV_Go_VT
+	rem %HOME%/SayCV_Go/bin/ui2walk.exe
+	rem pause
+	
 	rm -rf %HOME%/SayCV_Go/bin/sayTerm.exe
+	
 	go get github.com/tarm/goserial
 	go get github.com/SayCV/SayCV_Go_VT
 	go install github.com/SayCV/SayCV_Go_VT
