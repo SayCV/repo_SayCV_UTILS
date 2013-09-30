@@ -220,8 +220,39 @@ REM ##############################
 set /a BUILD_EXAMPLE_DEMO_HELLO_PKG=0
 set /a BUILD_EXAMPLE_VT=1
 set /a BUILD_EXAMPLE_DOTA2S=2
+set /a BUILD_EXAMPLE_WALK_RADIOBUTTON=3
+set /a BUILD_EXAMPLE_WALK_PROGRESSINDICATOR=4
 
-set /a BUILD_EXAMPLE_SELECTOR=%BUILD_EXAMPLE_VT%
+set /a BUILD_EXAMPLE_SELECTOR=%BUILD_EXAMPLE_WALK_PROGRESSINDICATOR%
+
+set /a BUILD_EXAMPLE_USER_DFT=0
+set /a BUILD_EXAMPLE_USER_SAYCV=1
+set /a BUILD_EXAMPLE_USER_WALK=2
+set /a BUILD_EXAMPLE_USER=1
+
+rem Notice this is string
+rem SayCV_Go_VT test
+set Example_Project_Name="SayCV_Go_VT"
+
+if '1'=='0' (
+    go install github.com/lxn/walk/tools/ui2walk
+    cd %HOME%/SayCV_Go/src/user/test
+    %HOME%/SayCV_Go/bin/ui2walk.exe
+    exit
+)
+
+if '%BUILD_EXAMPLE_USER%'=='%BUILD_EXAMPLE_USER_WALK%' (
+    call :__subCall_Build_Example_Walk_Template__ %Example_Project_Name%
+) else (
+if '%BUILD_EXAMPLE_USER%'=='%BUILD_EXAMPLE_USER_SAYCV%' (
+    call :__subCall_Build_Example_SayCV_Template__ %Example_Project_Name%
+) else (
+    call :__subCall_Build_Example_DFT_Template__ %Example_Project_Name%
+)
+)
+
+goto :__subCall_Status_Code__
+
 
 if '%BUILD_EXAMPLE_SELECTOR%'=='%BUILD_EXAMPLE_DEMO_HELLO_PKG%' (
 	go build github.com/user/newmath
@@ -235,8 +266,8 @@ if '%BUILD_EXAMPLE_SELECTOR%'=='%BUILD_EXAMPLE_VT%' (
 	
 	rm -rf %HOME%/SayCV_Go/bin/sayTerm.exe
 	
-	go get github.com/tarm/goserial
-	go get github.com/SayCV/SayCV_Go_VT
+	rem go get github.com/tarm/goserial
+	rem go get github.com/SayCV/SayCV_Go_VT
 	go install github.com/SayCV/SayCV_Go_VT
 	cd %HOME%/SayCV_Go/bin
 	mv SayCV_Go_VT.exe sayTerm.exe
@@ -245,12 +276,28 @@ if '%BUILD_EXAMPLE_SELECTOR%'=='%BUILD_EXAMPLE_VT%' (
 ) else (
 if '%BUILD_EXAMPLE_SELECTOR%'=='%BUILD_EXAMPLE_DOTA2S%' (
 	rm -rf %HOME%/SayCV_Go/bin/SayCV_Go_Dota2S.exe
-	go get github.com/tarm/goserial
+	rem go get github.com/tarm/goserial
 	go install github.com/SayCV/SayCV_Go_Dota2S
 	cd %HOME%/SayCV_Go/bin
 	SayCV_Go_Dota2S.exe
 ) else (
+if '%BUILD_EXAMPLE_SELECTOR%'=='%BUILD_EXAMPLE_WALK_RADIOBUTTON%' (
+	rm -rf %HOME%/SayCV_Go/bin/radiobutton.exe
+	go install github.com/lxn/walk/examples/radiobutton
+	cd %HOME%/SayCV_Go/bin
+	cp -rf %HOME%/SayCV_Go/dft.exe.manifest %HOME%/SayCV_Go/bin/radiobutton.exe.manifest
+	radiobutton.exe
+) else (
+if '%BUILD_EXAMPLE_SELECTOR%'=='%BUILD_EXAMPLE_WALK_PROGRESSINDICATOR%' (
+	rm -rf %HOME%/SayCV_Go/bin/progressindicator.exe
+	go install github.com/lxn/walk/examples/progressindicator
+	cd %HOME%/SayCV_Go/bin
+	cp -rf %HOME%/SayCV_Go/dft.exe.manifest %HOME%/SayCV_Go/bin/progressindicator.exe.manifest
+	progressindicator.exe
+) else (
 	echo DO NOTHING.
+)
+)
 )
 )
 )
@@ -319,4 +366,18 @@ if %EOF_ENV_FLAG% EQU %EOF_ENV_CMD% (
     )
   )
   goto :EOF
+
+:__subCall_Build_Example_Walk_Template__
+	rm -rf %HOME%/SayCV_Go/bin/%1.exe
+	go install github.com/lxn/walk/examples/%1
+	cd %HOME%/SayCV_Go/bin
+	cp -rf %HOME%/SayCV_Go/dft.exe.manifest %HOME%/SayCV_Go/bin/%1.exe.manifest
+	%1.exe
+
+:__subCall_Build_Example_SayCV_Template__
+	rm -rf %HOME%/SayCV_Go/bin/%1.exe
+	go install github.com/SayCV/%1
+	cd %HOME%/SayCV_Go/bin
+	cp -rf %HOME%/SayCV_Go/dft.exe.manifest %HOME%/SayCV_Go/bin/%1.exe.manifest
+	%1.exe
 
