@@ -261,8 +261,11 @@ if '%BUILD_EXAMPLE_SELECTOR%'=='%BUILD_EXAMPLE_DEMO_HELLO_PKG%' (
 ) else (
 if '%BUILD_EXAMPLE_SELECTOR%'=='%BUILD_EXAMPLE_VT%' (
 	cd %HOME%/SayCV_Go/src/github.com/SayCV/SayCV_Go_VT
-	rem %HOME%/SayCV_Go/bin/ui2walk.exe
-	rem pause
+if not exist "ui2walked" (
+	%HOME%/SayCV_Go/bin/ui2walk.exe
+	pause
+	touch ui2walked
+)
 	
 	rm -rf %HOME%/SayCV_Go/bin/sayTerm.exe
 	
@@ -375,6 +378,16 @@ if %EOF_ENV_FLAG% EQU %EOF_ENV_CMD% (
 	%1.exe
 
 :__subCall_Build_Example_SayCV_Template__
+	cd %HOME%/SayCV_Go/src/github.com/SayCV/%1
+	rm ui2walked
+if not exist "ui2walked" (
+	rem cp -rf %1.ui.orig %1.ui
+	echo Delete unknown elements such as: layout, index ...
+	sed '/layout/d' %1.ui.orig > %1.ui
+	%HOME%/SayCV_Go/bin/ui2walk.exe
+	pause
+	touch ui2walked
+)
 	rm -rf %HOME%/SayCV_Go/bin/%1.exe
 	go install github.com/SayCV/%1
 	cd %HOME%/SayCV_Go/bin
