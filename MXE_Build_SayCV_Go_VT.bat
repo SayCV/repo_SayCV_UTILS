@@ -381,10 +381,11 @@ if %EOF_ENV_FLAG% EQU %EOF_ENV_CMD% (
 	cd %HOME%/SayCV_Go/src/github.com/SayCV/%1
 	rm ui2walked
 if not exist "ui2walked" (
-	rem cp -rf %1.ui.orig %1.ui
+	mv -f %1.orig.ui %1.ui.orig
 	echo Delete unknown elements such as: layout, index ...
 	sed '/layout/d' %1.ui.orig > %1.ui
 	%HOME%/SayCV_Go/bin/ui2walk.exe
+	mv -f %1.ui.orig %1.orig.ui
 	pause
 	touch ui2walked
 )
