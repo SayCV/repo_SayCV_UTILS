@@ -223,7 +223,7 @@ set /a BUILD_EXAMPLE_DOTA2S=2
 set /a BUILD_EXAMPLE_WALK_RADIOBUTTON=3
 set /a BUILD_EXAMPLE_WALK_PROGRESSINDICATOR=4
 
-set /a BUILD_EXAMPLE_SELECTOR=%BUILD_EXAMPLE_WALK_PROGRESSINDICATOR%
+set /a BUILD_EXAMPLE_SELECTOR=%BUILD_EXAMPLE_DOTA2S%
 
 set /a BUILD_EXAMPLE_USER_DFT=0
 set /a BUILD_EXAMPLE_USER_SAYCV=1
@@ -233,6 +233,8 @@ set /a BUILD_EXAMPLE_USER=1
 rem Notice this is string
 rem SayCV_Go_VT test
 set Example_Project_Name="SayCV_Go_VT"
+
+goto :__subCall_Old_Buiding__
 
 if '1'=='0' (
     go install github.com/lxn/walk/tools/ui2walk
@@ -253,7 +255,7 @@ if '%BUILD_EXAMPLE_USER%'=='%BUILD_EXAMPLE_USER_SAYCV%' (
 
 goto :__subCall_Status_Code__
 
-
+:__subCall_Old_Buiding__
 if '%BUILD_EXAMPLE_SELECTOR%'=='%BUILD_EXAMPLE_DEMO_HELLO_PKG%' (
 	go build github.com/user/newmath
 	go install github.com/user/hello
@@ -278,6 +280,12 @@ if not exist "ui2walked" (
 	sayTerm.exe
 ) else (
 if '%BUILD_EXAMPLE_SELECTOR%'=='%BUILD_EXAMPLE_DOTA2S%' (
+	go get github.com/Garoth/godota
+	go get github.com/marksteve/go-dota2
+	go install github.com/Garoth/godota
+	go install github.com/marksteve/go-dota2
+	pause
+	
 	rm -rf %HOME%/SayCV_Go/bin/SayCV_Go_Dota2S.exe
 	rem go get github.com/tarm/goserial
 	go install github.com/SayCV/SayCV_Go_Dota2S
