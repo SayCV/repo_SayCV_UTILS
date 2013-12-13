@@ -25,3 +25,6 @@
 [submodule "Smarthosts-for-Android"]
 	path = Smarthosts-for-Android
 	url = https://sayCV@github.com/SayCV/Smarthosts-for-Android.git
+[submodule "sayCSSs"]
+	path = sayCSSs
+	url = https://SayCV@github.com/SayCV/sayCSSs.git
