@@ -28,3 +28,6 @@
 [submodule "sayCSSs"]
 	path = sayCSSs
 	url = https://SayCV@github.com/SayCV/sayCSSs.git
+[submodule "SayCV_ICS"]
+	path = SayCV_ICS
+	url = https://SayCV@github.com/SayCV/SayCV_ICS.git
