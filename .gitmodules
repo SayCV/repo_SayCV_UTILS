@@ -31,3 +31,6 @@
 [submodule "SayCV_ICS"]
 	path = SayCV_ICS
 	url = https://SayCV@github.com/SayCV/SayCV_ICS.git
+[submodule "youproxy"]
+	path = youproxy
+	url = https://SayCV@github.com/SayCV/youproxy.git
