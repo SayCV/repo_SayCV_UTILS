@@ -34,3 +34,6 @@
 [submodule "youproxy"]
 	path = youproxy
 	url = https://SayCV@github.com/SayCV/youproxy.git
+[submodule "Config"]
+	path = Config
+	url = https://SayCV@github.com/SayCV/Config.git
