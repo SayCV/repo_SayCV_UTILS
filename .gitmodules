@@ -37,3 +37,6 @@
 [submodule "Config"]
 	path = Config
 	url = https://SayCV@github.com/SayCV/Config.git
+[submodule "sayHosts"]
+	path = sayHosts
+	url = https://SayCV@github.com/SayCV/huhamhire-hosts
