@@ -21,18 +21,19 @@ rem set other values to included both MinGW and Cygwin Env.
 set /a INSIDE_UTILS_ENV_MINGW=0
 set /a INSIDE_UTILS_ENV_CYGWIN=1
 set /a INSIDE_UTILS_ENV_BOTHALL=2
-set /a INSIDE_UTILS_ENV_FLAG=1
+set /a INSIDE_UTILS_ENV_FLAG=0
 
 set /a INSIDE_UTILS_ENV_JAVA=1
 set /a INSIDE_UTILS_ENV_VISUAL_STUDIO=0
 set /a INSIDE_UTILS_ENV_QT=0
 
 set /a INSIDE_UTILS_ENV_SAYCV_MXE=0
+set /a INSIDE_UTILS_ENV_HG=1
 set /a INSIDE_UTILS_ENV_RTEMS=1
 set /a INSIDE_UTILS_ENV_APACHE_ANT=1
 set /a INSIDE_UTILS_ENV_GOOGLE_GO=1
 
-set /a SETTINGS_HTTP_PROXY=1
+set /a SETTINGS_HTTP_PROXY=0
 
 rem set other values to do some user cmds
 set /a EOF_ENV_CMD=0
@@ -190,6 +191,15 @@ setlocal enabledelayedexpansion
 setlocal disabledelayedexpansion
 )
 
+if '%INSIDE_UTILS_ENV_HG%'=='1' (
+setlocal enabledelayedexpansion
+echo SayCV_MXE: Set Mercurial HG Path.
+set      "HGROOT=C:/Program Files/Mercurial"
+echo SayCV_MXE: Add Mercurial HG dir to PATH.
+set "PATH=!PATH!;!HGROOT!"
+setlocal disabledelayedexpansion
+)
+
 if '%INSIDE_UTILS_ENV_GOOGLE_GO%'=='1' (
 setlocal enabledelayedexpansion
 	echo SayCV_MXE: Config Google Go TOOLs.
@@ -199,6 +209,7 @@ setlocal enabledelayedexpansion
 
 	echo SayCV_MXE: Add Google Go TOOLs to PATH.
 	set "PATH=!GOROOT!/bin;!PATH!"
+	set "GOPATH=!HOME!/SayCV_Go"
 	set "PATH=!GOROOT!/pkg/tool/windows_386;!PATH!"
 setlocal disabledelayedexpansion
 )
@@ -207,22 +218,27 @@ REM ******************************
 REM Start ...
 REM ##############################
 
+go get bitbucket.org/jpoirier/cpu
+
+cd SayCV_Go/src/bitbucket.org/jpoirier/cpu
+go run cpu_example.go
+
 ::: ##############################
 ::: Install Go: An image conversion command line tool written in the Go language
 ::: Install Go: Require a runtime or specific tools: ImageMagick
-call :__subCall_Build_SAYCV_GO_goconvert_INSTALL__
+rem call :__subCall_Build_SAYCV_GO_goconvert_INSTALL__
 ::: ##############################
 ::: Install Go mandelbrot
-call :__subCall_Build_SAYCV_GO_mandelbrot_INSTALL__
+rem call :__subCall_Build_SAYCV_GO_mandelbrot_INSTALL__
 ::: ##############################
 ::: Install Go Language Library for SVG generation
-call :__subCall_Build_SAYCV_GO_SVGO_INSTALL__ barchart
+rem call :__subCall_Build_SAYCV_GO_SVGO_INSTALL__ barchart
 rem No Para Means all
 rem barchart bubtrail bulletgraph
 rem pmap
 ::: ##############################
 ::: Install geo: Geographical calculations in Go
-call :__subCall_Build_SAYCV_GO_GEO_INSTALL__
+rem call :__subCall_Build_SAYCV_GO_GEO_INSTALL__
 ::: ##############################
 ::: Install gocode and MarGo
 rem call :__subCall_Build_SAYCV_GO_IDE_INSTALL__
