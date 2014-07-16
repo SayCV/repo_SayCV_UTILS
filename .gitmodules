@@ -40,3 +40,9 @@
 [submodule "sayHosts"]
 	path = sayHosts
 	url = https://SayCV@github.com/SayCV/huhamhire-hosts
+[submodule "source-han-sans"]
+	path = source-han-sans
+	url = https://SayCV@github.com/SayCV/source-han-sans.git
+[submodule "tools-FDK"]
+	path = tools-FDK
+	url = https://SayCV@github.com/SayCV/tools-FDK.git

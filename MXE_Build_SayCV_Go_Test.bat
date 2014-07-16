@@ -225,11 +225,22 @@ REM ******************************
 REM Start ...
 REM ##############################
 
+if '1'=='1' (
+go get github.com/golang/glog
+
+cd SayCV_Go/src/github.com/golang/glog
+go run glog_example.go -log_dir="./" -v=3
+
+rem go build glog_example.go
+rem glog_example.exe -log_dir="./" -v=3
+)
+
+if '0'=='1' (
 go get bitbucket.org/jpoirier/cpu
 
 cd SayCV_Go/src/bitbucket.org/jpoirier/cpu
 go run cpu_example.go
-
+)
 
 ::: ##############################
 ::: Install Go: An image conversion command line tool written in the Go language
