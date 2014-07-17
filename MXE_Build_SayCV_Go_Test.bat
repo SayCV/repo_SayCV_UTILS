@@ -226,20 +226,49 @@ REM Start ...
 REM ##############################
 
 if '1'=='1' (
-go get github.com/golang/glog
-
-cd SayCV_Go/src/github.com/golang/glog
-go run glog_example.go -log_dir="./" -v=3
-
-rem go build glog_example.go
-rem glog_example.exe -log_dir="./" -v=3
+	rem "http://localhost:8080/quote/?symbol=aapl"
+rem 	go get github.com/phyous/stockit
+	rem stock prediction program
+rem	go get github.com/TrevorDev/stockBrain
+	rem Stock ticker watcher with email warning
+rem 	go get github.com/JamesDunne/StockWatcher
+	rem 
+rem 	go get github.com/eggcaker/gh-stock
+	rem Stock quotes in the terminal
+rem 	go get github.com/michaelkitson/stock
+	rem Manage environment variables securely.
+rem 	go get github.com/buth/stocker
+	
+rem 	cd %ORIGIN_HOME%/SayCV_Go/src/github.com/phyous/stockit
+rem 	go build src/main.go
+	
+	cd %ORIGIN_HOME%/SayCV_Go/src/github.com/TrevorDev/stockBrain
+	
+	go run main.go
 )
 
 if '0'=='1' (
-go get bitbucket.org/jpoirier/cpu
+	go get github.com/marksteve/go-dota2
+	
+	cd SayCV_Go/src/github.com/marksteve/go-dota2
+	go run example.go
+)
 
-cd SayCV_Go/src/bitbucket.org/jpoirier/cpu
-go run cpu_example.go
+if '0'=='1' (
+	go get github.com/golang/glog
+	
+	cd SayCV_Go/src/github.com/golang/glog
+	go run glog_example.go -log_dir="./" -v=3
+	
+	rem go build glog_example.go
+	rem glog_example.exe -log_dir="./" -v=3
+)
+
+if '0'=='1' (
+	go get bitbucket.org/jpoirier/cpu
+	
+	cd SayCV_Go/src/bitbucket.org/jpoirier/cpu
+	go run cpu_example.go
 )
 
 ::: ##############################
