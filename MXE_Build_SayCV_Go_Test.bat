@@ -32,6 +32,7 @@ set /a INSIDE_UTILS_ENV_HG=1
 set /a INSIDE_UTILS_ENV_RTEMS=1
 set /a INSIDE_UTILS_ENV_APACHE_ANT=1
 set /a INSIDE_UTILS_ENV_GOOGLE_GO=1
+set /a INSIDE_UTILS_ENV_AUTOBAHNTESTSUITE=1
 
 set /a SETTINGS_HTTP_PROXY=0
 
@@ -221,6 +222,23 @@ setlocal enabledelayedexpansion
 setlocal disabledelayedexpansion
 )
 
+if '%INSIDE_UTILS_ENV_AUTOBAHNTESTSUITE%'=='1' (
+setlocal enabledelayedexpansion
+	echo SayCV_MXE: Alternatively, install from sources.
+	cd %ORIGIN_HOME%
+	git clone git://github.com/tavendo/AutobahnTestSuite.git
+	cd AutobahnTestSuite
+	git checkout v0.6.1
+	cd autobahntestsuite
+	python setup.py install
+	cd %ORIGIN_HOME%
+	
+	echo SayCV_MXE: Add AutobahnTestSuite TOOLs to PATH.
+	set "AutobahnTestSuite_ROOT=!HOME!/SayCV_Go"
+	set "PATH=!AutobahnTestSuite_ROOT!/bin;!PATH!"
+setlocal disabledelayedexpansion
+)
+
 REM ******************************
 REM Start ...
 REM ##############################
@@ -247,8 +265,8 @@ rem 	go build src/main.go
 	
 	cd %ORIGIN_HOME%/SayCV_Go/src/github.com/gorilla/websocket/examples/autobahn
 	go build server.go
-	server
-	wstest -m fuzzingclient -s fuzzingclient.json
+	call server.exe
+	rem wstest -m fuzzingclient -s fuzzingclient.json
 	
 	cd %ORIGIN_HOME%/SayCV_Go/src/github.com/SayCV/stockBrain
 	
