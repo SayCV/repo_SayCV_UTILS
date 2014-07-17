@@ -229,7 +229,10 @@ if '1'=='1' (
 	rem "http://localhost:8080/quote/?symbol=aapl"
 rem 	go get github.com/phyous/stockit
 	rem stock prediction program
-rem	go get github.com/TrevorDev/stockBrain
+	go get github.com/go-sql-driver/mysql
+	go get github.com/gorilla/mux
+	go get github.com/gorilla/websocket
+	go get github.com/SayCV/stockBrain
 	rem Stock ticker watcher with email warning
 rem 	go get github.com/JamesDunne/StockWatcher
 	rem 
@@ -242,9 +245,15 @@ rem 	go get github.com/buth/stocker
 rem 	cd %ORIGIN_HOME%/SayCV_Go/src/github.com/phyous/stockit
 rem 	go build src/main.go
 	
-	cd %ORIGIN_HOME%/SayCV_Go/src/github.com/TrevorDev/stockBrain
+	cd %ORIGIN_HOME%/SayCV_Go/src/github.com/gorilla/websocket/examples/autobahn
+	go build server.go
+	server
+	wstest -m fuzzingclient -s fuzzingclient.json
 	
-	go run main.go
+	cd %ORIGIN_HOME%/SayCV_Go/src/github.com/SayCV/stockBrain
+	
+	go build main.go
+	cmd
 )
 
 if '0'=='1' (
