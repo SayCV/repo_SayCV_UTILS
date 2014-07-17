@@ -78,7 +78,7 @@ echo SayCV_MXE: Add git bin dir to PATH.
 set PATH=%PATH%;D:/Program Files (x86)/Git/bin
 set PATH=%PATH%;D:/Program Files/Git/bin
 echo SayCV_MXE: Add Python bin dir to PATH.
-set PATH=D:/Python27;%PATH%
+set PATH=D:/Python27;D:/Python27/Scripts;%PATH%
 rem echo %PATH%
 
 echo SayCV_MXE: Init HOME directory to here call batfile.
@@ -224,12 +224,29 @@ setlocal disabledelayedexpansion
 
 if '%INSIDE_UTILS_ENV_AUTOBAHNTESTSUITE%'=='1' (
 setlocal enabledelayedexpansion
+	if not exist get-pip.py (
+		wget -c --no-check-certificate https://bootstrap.pypa.io/get-pip.py
+		python get-pip.py
+	)
+	rem python -m pip install -U pip
+	if '0'=='1' (
 	echo SayCV_MXE: Alternatively, install from sources.
 	cd %ORIGIN_HOME%
 	git clone git://github.com/tavendo/AutobahnTestSuite.git
-	cd AutobahnTestSuite
-	git checkout v0.6.1
-	cd autobahntestsuite
+	cd %ORIGIN_HOME%/AutobahnTestSuite
+	rem git checkout v0.6.1
+	cd %ORIGIN_HOME%/AutobahnTestSuite/autobahntestsuite
+	python setup.py install
+	cd %ORIGIN_HOME%
+	)
+	pip install --upgrade setuptools
+	rem pip install --upgrade setuptools DONE.
+	rem pip install autobahntestsuite
+	if not exist autobahntestsuite-0.6.1 (
+		wget -c --no-check-certificate https://pypi.python.org/packages/source/a/autobahntestsuite/autobahntestsuite-0.6.1.zip
+	)
+	cd %ORIGIN_HOME%/autobahntestsuite-0.6.1
+	cd %ORIGIN_HOME%/AutobahnTestSuite/autobahntestsuite
 	python setup.py install
 	cd %ORIGIN_HOME%
 	
@@ -238,7 +255,7 @@ setlocal enabledelayedexpansion
 	set "PATH=!AutobahnTestSuite_ROOT!/bin;!PATH!"
 setlocal disabledelayedexpansion
 )
-
+pause
 REM ******************************
 REM Start ...
 REM ##############################
