@@ -33,6 +33,8 @@ set /a INSIDE_UTILS_ENV_RTEMS=1
 set /a INSIDE_UTILS_ENV_APACHE_ANT=1
 set /a INSIDE_UTILS_ENV_GOOGLE_GO=1
 
+set /a INSIDE_UTILS_ENV_ADOBE_FDK=1
+
 set /a SETTINGS_HTTP_PROXY=0
 
 rem set other values to do some user cmds
@@ -109,6 +111,21 @@ if not exist "!JAVA_HOME!" (
 SetLocal DisableDelayedExpansion
 )
 
+if %SETTINGS_HTTP_PROXY% ==1 (
+	echo SayCV_MXE: Setting http_proxy on.
+	set http_proxy=http://127.0.0.1:8087/
+	set https_proxy=http://127.0.0.1:8087/
+)
+
+echo SayCV_MXE: Setting SayCV_MXE_HOME and SayCV_MXE_TARGET_PATH.
+set SayCV_MXE_HOME=%ORIGIN_HOME%/../repo_SayCV_UTILS/SayCV_MXE
+set SayCV_MXE_TARGET_PATH=%ORIGIN_HOME%/../work_root/target
+echo SayCV_MXE: Setting SayCV_MXE_HOME_ABS and SayCV_MXE_TARGET_PATH_ABS.
+cd ..
+set SayCV_MXE_HOME_ABS=%cd%/repo_SayCV_UTILS/SayCV_MXE
+set SayCV_MXE_TARGET_PATH_ABS=%cd%/work_root/target
+cd %ORIGIN_HOME%
+
 if '%INSIDE_UTILS_ENV_QT%'=='1' (
 SetLocal EnableDelayedExpansion
 echo SayCV_MXE: Add QT bin dir to PATH.
@@ -165,21 +182,6 @@ set "PATH=!PATH!;!RTEMS_TOOLS_PATH!"
 setlocal disabledelayedexpansion
 )
 
-if %SETTINGS_HTTP_PROXY% ==1 (
-	echo SayCV_MXE: Setting http_proxy on.
-	set http_proxy=http://127.0.0.1:8087/
-	set https_proxy=http://127.0.0.1:8087/
-)
-
-echo SayCV_MXE: Setting SayCV_MXE_HOME and SayCV_MXE_TARGET_PATH.
-set SayCV_MXE_HOME=%ORIGIN_HOME%/../repo_SayCV_UTILS/SayCV_MXE
-set SayCV_MXE_TARGET_PATH=%ORIGIN_HOME%/../work_root/target
-echo SayCV_MXE: Setting SayCV_MXE_HOME_ABS and SayCV_MXE_TARGET_PATH_ABS.
-cd ..
-set SayCV_MXE_HOME_ABS=%cd%/repo_SayCV_UTILS/SayCV_MXE
-set SayCV_MXE_TARGET_PATH_ABS=%cd%/work_root/target
-cd %ORIGIN_HOME%
-
 if '%INSIDE_UTILS_ENV_SAYCV_MXE%'=='1' (
 setlocal enabledelayedexpansion
 	echo SayCV_MXE: Add SAYCV_MXE TOOLs to PATH.
@@ -223,19 +225,34 @@ setlocal disabledelayedexpansion
 
 if '%INSIDE_UTILS_ENV_ADOBE_FDK%'=='1' (
 setlocal enabledelayedexpansion
-	echo SayCV_MXE: Config Adobe Font Development Kit for OpenType (AFDKO).
-	set "ADOBE_FDK_ROOT=!SayCV_MXE_HOME_ABS!/tools-FDK/Tools/win"
+	echo SayCV_MXE: Config Adobe Font Development Kit for OpenType - AFDKO.
+	set "ADOBE_FDK_ROOT=!cd!/tools-FDK"
 
-	echo SayCV_MXE: Add Adobe Font Development Kit for OpenType (AFDKO) to PATH.
-	set "PATH=!ADOBE_FDK_ROOT!;!PATH!"
+	echo SayCV_MXE: Add Adobe Font Development Kit for OpenType - AFDKO - to PATH.
+	set "PATH=!ADOBE_FDK_ROOT!/Tools/win;!PATH!"
+	set "PATH=!ADOBE_FDK_ROOT!/Tools/win/Python/AFDKOPython;!PATH!"
 setlocal disabledelayedexpansion
+)
+
+if '%INSIDE_UTILS_ENV_ADOBE_FDK%'=='1' (
+	if not exist stmap_install_fininshed_h (
+		cd %cd%/tools-FDK/Tools/win/Python/AFDKOPython
+		FinishInstallWindows.cmd
+		rem cd Tools/FontLab
+		rem python installFontLabMacros.py 
+		rem "cd ../../"
+	)
+	touch stmap_install_fininshed_h
 )
 
 REM ******************************
 REM Start ...
+cd %ORIGIN_HOME%
 REM ##############################
 
 if '1'=='1' (
+cd source-han-sans
+
 makeotf -f cidfont.ps.CN -ff features.CN -fi cidfontinfo.CN -mf ../FontMenuNameDB.SUBSET -r -nS -cs 25 -ch ../UniSourceHanSansCN-UTF32-H
 )
 
