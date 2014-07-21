@@ -222,45 +222,76 @@ setlocal enabledelayedexpansion
 setlocal disabledelayedexpansion
 )
 
-if '%INSIDE_UTILS_ENV_AUTOBAHNTESTSUITE%'=='1' (
+if '%INSIDE_UTILS_ENV_AUTOBAHNTESTSUITE%'=='0' (
 setlocal enabledelayedexpansion
 	if not exist get-pip.py (
 		wget -c --no-check-certificate https://bootstrap.pypa.io/get-pip.py
 		python get-pip.py
 	)
 	rem python -m pip install -U pip
-	if '0'=='1' (
-	echo SayCV_MXE: Alternatively, install from sources.
-	cd %ORIGIN_HOME%
-	git clone git://github.com/tavendo/AutobahnTestSuite.git
-	cd %ORIGIN_HOME%/AutobahnTestSuite
-	rem git checkout v0.6.1
-	cd %ORIGIN_HOME%/AutobahnTestSuite/autobahntestsuite
-	python setup.py install
-	cd %ORIGIN_HOME%
-	)
 	pip install --upgrade setuptools
 	rem pip install --upgrade setuptools DONE.
-	rem pip install autobahntestsuite
-	if not exist autobahntestsuite-0.6.1 (
-		wget -c --no-check-certificate https://pypi.python.org/packages/source/a/autobahntestsuite/autobahntestsuite-0.6.1.zip
+	pip install autobahntestsuite
+	if '0'=='1' (
+		echo SayCV_MXE: Alternatively, install from sources.
+		cd %ORIGIN_HOME%
+		git clone git://github.com/tavendo/AutobahnTestSuite.git
+		cd %ORIGIN_HOME%/AutobahnTestSuite
+		rem git checkout v0.6.1
+		cd %ORIGIN_HOME%/AutobahnTestSuite/autobahntestsuite
+		python setup.py install
+		cd %ORIGIN_HOME%
 	)
-	cd %ORIGIN_HOME%/autobahntestsuite-0.6.1
-	cd %ORIGIN_HOME%/AutobahnTestSuite/autobahntestsuite
-	python setup.py install
-	cd %ORIGIN_HOME%
+	
+	if '0'=='1' (
+		if not exist autobahntestsuite-0.6.1 (
+			wget -c --no-check-certificate https://pypi.python.org/packages/source/a/autobahntestsuite/autobahntestsuite-0.6.1.zip
+		)
+		cd %ORIGIN_HOME%/autobahntestsuite-0.6.1
+		rem cd %ORIGIN_HOME%/AutobahnTestSuite/autobahntestsuite
+		python setup.py install
+		cd %ORIGIN_HOME%
+	)
 	
 	echo SayCV_MXE: Add AutobahnTestSuite TOOLs to PATH.
 	set "AutobahnTestSuite_ROOT=!HOME!/SayCV_Go"
 	set "PATH=!AutobahnTestSuite_ROOT!/bin;!PATH!"
 setlocal disabledelayedexpansion
 )
-pause
+
 REM ******************************
 REM Start ...
 REM ##############################
 
 if '1'=='1' (
+	go get github.com/tealeg/xlsx2csv
+	
+	cd SayCV_Go/src/github.com/tealeg/xlsx2csv
+	go run main.go -f=testfile.xlsx -i=0 -d=,
+)
+
+if '0'=='1' (
+	rem "http://localhost:8080/quote/?symbol=aapl"
+rem 	go get github.com/phyous/stockit
+	rem stock prediction program
+	rem Stock ticker watcher with email warning
+rem 	go get github.com/JamesDunne/StockWatcher
+	rem 
+rem 	go get github.com/eggcaker/gh-stock
+	rem Stock quotes in the terminal
+rem 	go get github.com/michaelkitson/stock
+	rem Manage environment variables securely.
+rem 	go get github.com/buth/stocker
+	
+rem 	cd %ORIGIN_HOME%/SayCV_Go/src/github.com/phyous/stockit
+rem 	go build src/main.go
+	
+	cd %ORIGIN_HOME%/SayCV_Go/src/github.com/gorilla/websocket/examples/autobahn
+	go build server.go
+	rem start server.exe
+	rem wstest -m fuzzingclient -s fuzzingclient.json
+)
+if '0'=='1' (
 	rem "http://localhost:8080/quote/?symbol=aapl"
 rem 	go get github.com/phyous/stockit
 	rem stock prediction program
@@ -279,11 +310,6 @@ rem 	go get github.com/buth/stocker
 	
 rem 	cd %ORIGIN_HOME%/SayCV_Go/src/github.com/phyous/stockit
 rem 	go build src/main.go
-	
-	cd %ORIGIN_HOME%/SayCV_Go/src/github.com/gorilla/websocket/examples/autobahn
-	go build server.go
-	call server.exe
-	rem wstest -m fuzzingclient -s fuzzingclient.json
 	
 	cd %ORIGIN_HOME%/SayCV_Go/src/github.com/SayCV/stockBrain
 	
