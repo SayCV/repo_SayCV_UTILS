@@ -33,6 +33,7 @@ set /a INSIDE_UTILS_ENV_RTEMS=1
 set /a INSIDE_UTILS_ENV_APACHE_ANT=1
 set /a INSIDE_UTILS_ENV_GOOGLE_GO=1
 set /a INSIDE_UTILS_ENV_AUTOBAHNTESTSUITE=1
+set /a INSIDE_UTILS_ENV_GO_IDE_SUBLIME_TEXT=1
 
 set /a SETTINGS_HTTP_PROXY=0
 
@@ -222,7 +223,7 @@ setlocal enabledelayedexpansion
 setlocal disabledelayedexpansion
 )
 
-if '%INSIDE_UTILS_ENV_AUTOBAHNTESTSUITE%'=='1' (
+if '%INSIDE_UTILS_ENV_AUTOBAHNTESTSUITE%'=='0' (
 setlocal enabledelayedexpansion
 	if not exist get-pip.py (
 		wget -c --no-check-certificate https://bootstrap.pypa.io/get-pip.py
@@ -232,7 +233,7 @@ setlocal enabledelayedexpansion
 	pip install --upgrade setuptools
 	rem pip install --upgrade setuptools DONE.
 	pip install autobahntestsuite
-	if '1'=='1' (
+	if '0'=='1' (
 		echo SayCV_MXE: Alternatively, install from sources.
 		cd %ORIGIN_HOME%
 		git clone git://github.com/tavendo/AutobahnTestSuite.git
@@ -259,120 +260,30 @@ setlocal enabledelayedexpansion
 setlocal disabledelayedexpansion
 )
 
+if '%INSIDE_UTILS_ENV_GO_IDE_SUBLIME_TEXT%'=='1' (
+setlocal enabledelayedexpansion
+	echo SayCV_MXE: Config Sublime Text TOOLs.
+	rem Because of PATH NOT Include such as ..
+	set "SUBLIME_TEXT_ROOT=D:/Program Files/Sublime Text 3"
+
+	echo SayCV_MXE: Add Sublime Text TOOLs to PATH.
+	set "PATH=!SUBLIME_TEXT_ROOT!;!PATH!"
+setlocal disabledelayedexpansion
+)
+
 REM ******************************
 REM Start ...
 REM ##############################
 
 if '0'=='1' (
-	go get github.com/dropbox/godropbox
+	go get -u github.com/nsf/gocode
+	go install github.com/nsf/gocode
 )
 
-if '0'=='1' (
-	go get github.com/tealeg/xlsx2csv
-	
-	cd SayCV_Go/src/github.com/tealeg/xlsx2csv
-	go run main.go -f=testfile.xlsx -i=0 -d=,
-)
-
-if '0'=='1' (
-	rem "http://localhost:8080/quote/?symbol=aapl"
-rem 	go get github.com/phyous/stockit
-	rem stock prediction program
-	rem Stock ticker watcher with email warning
-rem 	go get github.com/JamesDunne/StockWatcher
-	rem 
-rem 	go get github.com/eggcaker/gh-stock
-	rem Stock quotes in the terminal
-rem 	go get github.com/michaelkitson/stock
-	rem Manage environment variables securely.
-rem 	go get github.com/buth/stocker
-	
-rem 	cd %ORIGIN_HOME%/SayCV_Go/src/github.com/phyous/stockit
-rem 	go build src/main.go
-	
-	cd %ORIGIN_HOME%/SayCV_Go/src/github.com/gorilla/websocket/examples/autobahn
-	go build server.go
-	rem start server.exe
-	rem wstest -m fuzzingclient -s fuzzingclient.json
-)
 if '1'=='1' (
-	rem "http://localhost:8080/quote/?symbol=aapl"
-rem 	go get github.com/phyous/stockit
-	rem stock prediction program
-	go get github.com/go-sql-driver/mysql
-	go get github.com/gorilla/mux
-	go get github.com/gorilla/websocket
-	go get github.com/SayCV/stockBrain
-	rem Stock ticker watcher with email warning
-rem 	go get github.com/JamesDunne/StockWatcher
-	rem 
-rem 	go get github.com/eggcaker/gh-stock
-	rem Stock quotes in the terminal
-rem 	go get github.com/michaelkitson/stock
-	rem Manage environment variables securely.
-rem 	go get github.com/buth/stocker
-	
-rem 	cd %ORIGIN_HOME%/SayCV_Go/src/github.com/phyous/stockit
-rem 	go build src/main.go
-	
-	cd %ORIGIN_HOME%/SayCV_Go/src/github.com/SayCV/stockBrain
-	
-	go build main.go
-	cmd
+	rem START command Not inherit current envirements variable But CALL Can do it
+	START sublime_text.exe
 )
-
-if '0'=='1' (
-	go get github.com/marksteve/go-dota2
-	
-	cd SayCV_Go/src/github.com/marksteve/go-dota2
-	go run example.go
-)
-
-if '0'=='1' (
-	go get github.com/golang/glog
-	
-	cd SayCV_Go/src/github.com/golang/glog
-	go run glog_example.go -log_dir="./" -v=3
-	
-	rem go build glog_example.go
-	rem glog_example.exe -log_dir="./" -v=3
-)
-
-if '0'=='1' (
-	go get bitbucket.org/jpoirier/cpu
-	
-	cd SayCV_Go/src/bitbucket.org/jpoirier/cpu
-	go run cpu_example.go
-)
-
-::: ##############################
-::: Install Go: An image conversion command line tool written in the Go language
-::: Install Go: Require a runtime or specific tools: ImageMagick
-rem call :__subCall_Build_SAYCV_GO_goconvert_INSTALL__
-::: ##############################
-::: Install Go mandelbrot
-rem call :__subCall_Build_SAYCV_GO_mandelbrot_INSTALL__
-::: ##############################
-::: Install Go Language Library for SVG generation
-rem call :__subCall_Build_SAYCV_GO_SVGO_INSTALL__ barchart
-rem No Para Means all
-rem barchart bubtrail bulletgraph
-rem pmap
-::: ##############################
-::: Install geo: Geographical calculations in Go
-rem call :__subCall_Build_SAYCV_GO_GEO_INSTALL__
-::: ##############################
-::: Install gocode and MarGo
-rem call :__subCall_Build_SAYCV_GO_IDE_INSTALL__
-::: ##############################
-::: Example: So Simple, So Ugly
-rem call :__subCall_Build_SAYCV_GO_UIK_TEST__ uiktest
-rem uikradio uiktest 
-::: ##############################
-::: Example: So Useful, So Good
-rem call :__subCall_Build_SAYCV_GO_WALK_TEST__ notifyicon
-rem declarative dialog drawing externalwidgets filebrowser imageicon imageviewer img
-rem listbox logview notifyicon progressindicator tableview webview
 
 ::: ##############################
 cd %HOME%
@@ -438,65 +349,4 @@ if %EOF_ENV_FLAG% EQU %EOF_ENV_CMD% (
     )
   )
   goto :EOF
-
-rem ./goconvert -f imagefolderpath -c mycollectionname
-:__subCall_Build_SAYCV_GO_goconvert_INSTALL__
-	go get code.google.com/p/exif4go
-	go get code.google.com/p/goconvert
-	cd %GOROOT%/src/pkg/code.google.com/p/goconvert
-	cd HOME=%cd%
-	goconvert -f test -c firsttest
-	goto :__subCall_Status_Code__
-
-:__subCall_Build_SAYCV_GO_mandelbrot_INSTALL__
-	go get github.com/Nightgunner5/mandelbrot
-	goto :__subCall_Status_Code__
-
-:__subCall_Build_SAYCV_GO_SVGO_INSTALL__
-	go get github.com/ajstarks/svgo
-	go install github.com/ajstarks/svgo/...
-	cd %GOROOT%/src/pkg/github.com/ajstarks/svgo
-	rem quag svgdef svgopher
-	rem call :__subCall_Build_SAYCV_GO_COMMON_TEST__ %1
-  goto :__subCall_Status_Code__
-
-:__subCall_Build_SAYCV_GO_GEO_INSTALL__
-	go get -u github.com/kellydunn/golang-geo
-	
-	cd %GOROOT%/src/pkg/github.com/kellydunn/golang-geo/test
-	cd %GOROOT%/src/pkg/github.com/kellydunn/golang-geo
-	GO_ENV=test go test
-	rem helpers
-	call :__subCall_Build_SAYCV_GO_COMMON_TEST__ %1
-
-:__subCall_Build_SAYCV_GO_IDE_INSTALL__
-	go get -u github.com/nsf/gocode
-	go get -u github.com/DisposaBoy/MarGo
-	go install github.com/nsf/gocode
-	go install github.com/DisposaBoy/MarGo
-  goto :__subCall_Status_Code__
-
-:__subCall_Build_SAYCV_GO_UIK_TEST__
-	rem go get github.com/AllenDang/w32
-	rem go get github.com/skelterjohn/go.uik
-	cd %GOROOT%/src/pkg/github.com/skelterjohn/go.uik/examples
-	call :__subCall_Build_SAYCV_GO_COMMON_TEST__ %1
-
-:__subCall_Build_SAYCV_GO_WALK_TEST__
-	rem go get github.com/lxn/walk
-	cd %GOROOT%/src/pkg/github.com/lxn/walk/examples
-	call :__subCall_Build_SAYCV_GO_COMMON_TEST__ %1
-	
-:__subCall_Build_SAYCV_GO_COMMON_TEST__
-	if "%1"=="" goto :__subCall_Status_Code__
-	cd %1
-	if exist build.bat (
-		call build.bat
-	) else (
-		go build
-	)
-	echo Run Programes...
-	%1.exe
-  goto :__subCall_Status_Code__
-
 
