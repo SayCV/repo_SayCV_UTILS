@@ -222,17 +222,18 @@ setlocal enabledelayedexpansion
 setlocal disabledelayedexpansion
 )
 
-if '%INSIDE_UTILS_ENV_AUTOBAHNTESTSUITE%'=='1' (
+if '%INSIDE_UTILS_ENV_AUTOBAHNTESTSUITE%'=='0' (
 setlocal enabledelayedexpansion
 	if not exist get-pip.py (
 		wget -c --no-check-certificate https://bootstrap.pypa.io/get-pip.py
 		python get-pip.py
 	)
+	python get-pip.py
 	rem python -m pip install -U pip
 	pip install --upgrade setuptools
 	rem pip install --upgrade setuptools DONE.
 	pip install autobahntestsuite
-	if '1'=='1' (
+	if '0'=='1' (
 		echo SayCV_MXE: Alternatively, install from sources.
 		cd %ORIGIN_HOME%
 		git clone git://github.com/tavendo/AutobahnTestSuite.git
@@ -295,6 +296,9 @@ rem 	go build src/main.go
 	rem start server.exe
 	rem wstest -m fuzzingclient -s fuzzingclient.json
 )
+cd %ORIGIN_HOME%/SayCV_Go/src/github.com/gorilla/websocket/examples/autobahn
+wstest -m fuzzingclient -s fuzzingclient.json
+cmd
 if '1'=='1' (
 	rem "http://localhost:8080/quote/?symbol=aapl"
 rem 	go get github.com/phyous/stockit
