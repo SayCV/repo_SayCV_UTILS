@@ -296,9 +296,7 @@ rem 	go build src/main.go
 	rem start server.exe
 	rem wstest -m fuzzingclient -s fuzzingclient.json
 )
-cd %ORIGIN_HOME%/SayCV_Go/src/github.com/gorilla/websocket/examples/autobahn
-wstest -m fuzzingclient -s fuzzingclient.json
-cmd
+
 if '1'=='1' (
 	rem "http://localhost:8080/quote/?symbol=aapl"
 rem 	go get github.com/phyous/stockit
