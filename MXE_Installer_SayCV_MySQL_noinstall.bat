@@ -292,13 +292,13 @@ if '1'=='1' (
 	echo 注册服务  
 	echo mysqld --install mysql-5.6.19-win32 --defaults-file=D:/work_tools/mysql-5.6.19-win32/my.ini
 	echo 启动服务
-	echo net start mysql-5.5.15-win32
+	echo net start mysql-5.6.19-win32
 	echo 命令行登录
 	echo mysql -u root -p
 	echo 停止服务
-	echo net stop mysql-5.5.15-win32
+	echo net stop mysql-5.6.19-win32
 	echo 删除服务
-	echo mysqld --remove mysql-5.5.15-win32
+	echo mysqld --remove mysql-5.6.19-win32
 	echo 启动服务不通过注册
 	echo mysqld --console
 	echo 停止服务不通过注册服务
