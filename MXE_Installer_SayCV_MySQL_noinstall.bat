@@ -276,7 +276,7 @@ if '%INSIDE_UTILS_ENV_MYSQL%'=='1' (
 setlocal enabledelayedexpansion
 	echo SayCV_MXE: Config MySQL TOOLs.
 	rem Because of PATH NOT Include such as ..
-	set "MYSQL_ROOT=D:/work_tools/mysql-5.6.19-win32"
+	set "MYSQL_ROOT=D:/work_tools/mysql"
 
 	echo SayCV_MXE: Add MySQL TOOLs to PATH.
 	set "PATH=!MYSQL_ROOT!/bin;!PATH!"
@@ -290,11 +290,14 @@ REM ##############################
 rem 命令行安装mysql
 if '1'=='1' (
 	echo 注册服务  
-	echo mysqld --install mysql --defaults-file="D:\work_tools\mysql-5.6.19-win32/my.ini"
+	echo mysqld --install mysql --defaults-file="D:\work_tools\mysql\my.ini"
+	mysqld --install mysql --defaults-file="D:\work_tools\mysql\my.ini"
 	echo 启动服务
 	echo net start mysql
+	net start mysql
 	echo 设置服务为自动启动：
 	echo sc config mysql start= auto
+	sc config mysql start= auto
 	echo 命令行登录
 	echo mysql -u root -p
 	echo 停止服务
@@ -307,6 +310,7 @@ if '1'=='1' (
 	echo mysqladmin -u root shutdown
 	echo 1067 error:
 	echo rundll32.exe setupapi,InstallHinfSection DefaultInstall 128 D:\work_tools\mysql-5.6.19-win32\my.inf
+	mysql -u root -p
 	cmd
 )
 

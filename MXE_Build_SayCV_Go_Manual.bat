@@ -264,14 +264,14 @@ REM ******************************
 REM Start ...
 REM ##############################
 
-if '1'=='1' (
+if '0'=='1' (
 	go get github.com/SayCV/shutdowntimer
 	cd %ORIGIN_HOME%/SayCV_Go/src/github.com/SayCV/shutdowntimer
-	go build
+	go build -ldflags "-H windowsgui"
 	cmd
 )
 
-if '0'=='1' (
+if '1'=='1' (
 	echo "godiff file1 file2 > results.html"
 	echo "godiff directory1 directory > results.html"
 	go get github.com/spcau/godiff
