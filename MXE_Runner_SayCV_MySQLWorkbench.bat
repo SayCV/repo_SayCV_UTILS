@@ -34,7 +34,6 @@ set /a INSIDE_UTILS_ENV_APACHE_ANT=1
 set /a INSIDE_UTILS_ENV_GOOGLE_GO=1
 set /a INSIDE_UTILS_ENV_AUTOBAHNTESTSUITE=1
 set /a INSIDE_UTILS_ENV_GO_IDE_SUBLIME_TEXT=1
-set /a INSIDE_UTILS_ENV_MYSQL=1
 
 set /a SETTINGS_HTTP_PROXY=0
 
@@ -272,14 +271,14 @@ setlocal enabledelayedexpansion
 setlocal disabledelayedexpansion
 )
 
-if '%INSIDE_UTILS_ENV_MYSQL%'=='1' (
+if '1'=='1' (
 setlocal enabledelayedexpansion
-	echo SayCV_MXE: Config MySQL TOOLs.
+	echo SayCV_MXE: Config MySQLWorkbench TOOLs.
 	rem Because of PATH NOT Include such as ..
-	set "MYSQL_ROOT=D:/work_tools/mysql-5.6.19-win32"
+	set "MySQLWorkbench_ROOT=D:/Program Files/MySQL/MySQL Workbench 6.1 CE"
 
-	echo SayCV_MXE: Add MySQL TOOLs to PATH.
-	set "PATH=!MYSQL_ROOT!/bin;!PATH!"
+	echo SayCV_MXE: Add MySQLWorkbench TOOLs to PATH.
+	set "PATH=!MySQLWorkbench_ROOT!;!PATH!"
 setlocal disabledelayedexpansion
 )
 
@@ -287,27 +286,9 @@ REM ******************************
 REM Start ...
 REM ##############################
 
-rem 命令行安装mysql
 if '1'=='1' (
-	echo 注册服务  
-	echo mysqld --install mysql --defaults-file="D:\work_tools\mysql-5.6.19-win32/my.ini"
-	echo 启动服务
-	echo net start mysql
-	echo 设置服务为自动启动：
-	echo sc config mysql start= auto
-	echo 命令行登录
-	echo mysql -u root -p
-	echo 停止服务
-	echo net stop mysql
-	echo 删除服务
-	echo mysqld --remove mysql
-	echo 启动服务不通过注册
-	echo mysqld --console
-	echo 停止服务不通过注册服务
-	echo mysqladmin -u root shutdown
-	echo 1067 error:
-	echo rundll32.exe setupapi,InstallHinfSection DefaultInstall 128 D:\work_tools\mysql-5.6.19-win32\my.inf
-	cmd
+	rem START command Not inherit current envirements variable But CALL Can do it
+	START MySQLWorkbench.exe
 )
 
 ::: ##############################
