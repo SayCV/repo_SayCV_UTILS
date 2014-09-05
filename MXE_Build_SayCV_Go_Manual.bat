@@ -264,10 +264,11 @@ REM ******************************
 REM Start ...
 REM ##############################
 
-if '0'=='1' (
+if '1'=='1' (
 	go get github.com/SayCV/shutdowntimer
 	cd %ORIGIN_HOME%/SayCV_Go/src/github.com/SayCV/shutdowntimer
-	go build -ldflags "-H windowsgui"
+	go build
+	rem -ldflags "-H windowsgui"
 	cmd
 )
 
