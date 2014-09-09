@@ -46,3 +46,6 @@
 [submodule "tools-FDK"]
 	path = tools-FDK
 	url = https://SayCV@github.com/SayCV/tools-FDK.git
+[submodule "WiresharkPortable"]
+	path = WiresharkPortable
+	url = https://SayCV@github.com/SayCV/WiresharkPortable.git
